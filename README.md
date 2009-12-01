@@ -144,9 +144,7 @@ once you've built your (fab) site, you can deploy on any part of it to deploy to
       // you can specify an existing server too
       ( "site3" )
         ( "/", "this is running on port 4012" )
-      ()
-      
-    .deploy( server );
+      ().deploy( server );
 
 ## extending (fab)
 
