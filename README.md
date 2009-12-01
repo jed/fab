@@ -131,20 +131,23 @@ once you've built your (fab) site, you can deploy on any part of it to deploy to
     server.listen( 4012 );
     
     ( fab )
-
+    
       ( "site1" )
         ( "/", "this is running on port 4010" )
-      ().deploy( 4010 )
-
+        .deploy( 4010 )
+      ()
+    
       // 4011 is the default for (fab)
       ( "site2" )
         ( "/", "this is running on port 4011" )
-      ().deploy()
+        .deploy()
+      ()
       
       // you can specify an existing server too
       ( "site3" )
         ( "/", "this is running on port 4012" )
-      ().deploy( server );
+        .deploy( server )
+      ();
 
 ## extending (fab)
 

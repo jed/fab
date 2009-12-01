@@ -436,11 +436,11 @@
     if ( typeof server == "number" )
       http.createServer( handler ).listen( server )
       
-    else if ( server instanceof http.Server )
+    else if ( server.constructor.name == "Server" )
       server.addListener( "request", handler );
       
     else sys.error( "Unsupported deployment target." )
-    
+
     return this;
     
     function handler( req, res ) {
