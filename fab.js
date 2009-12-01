@@ -426,16 +426,26 @@
   };
   
   // deploy method, specific to node.js
-  fab.fn.deploy = function() {
-    var self = this;
+  fab.fn.deploy = function( server ) {
+    var http = require( "http" ),
+        self = this;
+
+    if ( !server )
+      server = 0xFAB;
   
-    http.createServer( function( req, res ) {
-  
-      self( fab.env( req, res ) );
-  
-    }).listen( 0xFAB )
+    if ( typeof server == "number" )
+      http.createServer( handler ).listen( server )
+      
+    else if ( server instanceof http.Server )
+      server.addListener( "request", handler );
+      
+    else sys.error( "Unsupported deployment target." )
     
     return this;
-  };  
+    
+    function handler( req, res ) {
+      self( fab.env( req, res ) );
+    }
+  }
 
 })();
