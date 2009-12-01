@@ -169,7 +169,7 @@ and like jQuery, you can add your own methods to prototype of the fab object at 
 
 though i'm not sure how much of this will actually come true due to time constraints, there are some things i think would be nice to add for future versions of (fab):
 
-### mulitple handlers for each bind, chained asynchronously
+### multiple handlers for each bind, chained asynchronously
 
 right now you can only bind a single function to each part of a site, but eventually i'd like the ability to bind many, and chain them:
 
