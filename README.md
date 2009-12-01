@@ -1,3 +1,9 @@
+     ___   ___         __     ___  
+    ,'  _|.'  _|.---.-.|  |--.|_  `.
+    |  |  |   _||  _  ||  _  |  |  |
+    |  |_ |__|  |___._||_____| _|  |
+    `.___|                    |___,'                                 
+                                 
 # (fab) / a DSL for building [node.js](http://nodejs.org/) apps
 
 ## introduction
