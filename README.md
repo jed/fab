@@ -222,6 +222,7 @@ any function passed as a single argument to a (fab) function is called with `thi
 ## what's next
 
 here are some things i think would be nice to add for future versions of (fab):
+
 - middleware examples, including basic authentication, header generation for etags, content length, and other basic niceties.
 - support for other platforms, most importantly browser environments. this would let you run the same (fab) code on both client and server.
 
