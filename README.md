@@ -217,7 +217,9 @@ just like the `respond` function, the listener function takes one argument: the 
       return this;
     }
 
-any function passed as a single argument to a (fab) function is called with `this` set to the current context, allowing you to wrap the context's handler, or bind to methods received by the context or its subpaths. more documentation on this is forthcoming.
+any function passed as a single argument to a (fab) function is called with `this` set to the current context, allowing you to wrap the context's handler, or bind to methods received by the context or its subpaths. in this case, the text in all response bodies will be capitalized for any path under `/upper`.
+
+more documentation on this is forthcoming.
 
 ## what's next
 
