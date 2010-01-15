@@ -71,7 +71,7 @@ for paths with a common prefix, like the two above, we can take advantage of (fa
     
 we've added three new ideas here:
 
-- when a single string (`hello` in this case) is passed as an argument, it returns a new subpath context.
+- when a single string (`/hello` in this case) is passed as an argument, it returns a new subpath context.
 - `[ "GET" ]` can be used to bind to `GET` requests on the current context. all other common http methods (`HEAD`, `GET`, `POST`, `PUT`, `DELETE`, `TRACE`, `OPTIONS`, and `CONNECT`) are also available, as well as the catchall `*`. since `[ "GET" ]` is just a reference to the `GET` method, we could substitute it with the more conventional `.GET`.
 - the empty call `()` returns the previous context, which in this case is the root of our app.
 
