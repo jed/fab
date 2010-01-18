@@ -20,7 +20,7 @@ fab.init = function() {
   fab.extend( this, fab.prototype );
   this.last = this;
   
-  this.nodes = [];
+  this.paths = [];
   this.method = {};
 
   this.handler = fab.handle;
@@ -65,7 +65,7 @@ fab.dispatch = function( first ) {
 fab.append = function( pattern, fn ) {
   var
     flags = "",
-    nodes = this.nodes,
+    paths = this.paths,
     i = 0,
     matched = 0,
     child = fab();
@@ -80,17 +80,17 @@ fab.append = function( pattern, fn ) {
   }
   
   pattern = pattern.replace( /^[^^]/, "^$&" );
-  child.pattern = new RegExp( pattern, flags );
+
   child.last = this;
   child.status = fab.create( this.status );
   
-  for ( var len = nodes.length, source; i < len; i++ ) {
-    source = nodes[ i ].pattern.source;
+  for ( var len = paths.length, source; i < len; i++ ) {
+    source = paths[ i ][ 0 ].source;
     if ( source == pattern ) matched = 1;
     if ( source >= pattern ) break;
   }
   
-  nodes.splice( i, matched, child );
+  paths.splice( i, matched, [ new RegExp( pattern, flags ), child ] );
   
   return typeof fn !== "undefined"
     ? child[ "GET" ]( fn ).last
@@ -103,6 +103,9 @@ fab.handle = function( respond ) {
     context = this.context,
     method = context.method,
     status = context.status,
+    paths = context.paths,
+    i = paths.length,
+    match, next,
     url = this.url,
     path = url.pathname.substr( this.cursor );
 
@@ -111,18 +114,19 @@ fab.handle = function( respond ) {
       .apply( this, arguments );
   }
 
-  for ( var i = 0, next, match; next = context.nodes[ i++ ]; ) {
-    match = path.match( next.pattern );
+  while ( i-- ) {
+    next = paths[ i ];
+    match = path.match( next[ 0 ] );
     if ( !match ) continue;
 
-    this.context = next;
+    this.context = next[ 1 ];
     this.cursor += match.shift().length;
-    url.pattern += next.pattern.source.substr( 1 );
+    url.pattern += next[ 0 ].source.substr( 1 );
     if ( match.length ) {
       Array.prototype.push.apply( url.capture.original, match );
     }
 
-    return next.handler.apply( this, arguments );
+    return next[ 1 ].handler.apply( this, arguments );
   }
   
   status[ 404 ].apply( this, arguments );

@@ -123,9 +123,9 @@ since returning static strings isn't very useful, let's talk about function hand
 
 we can use this information to return any of the following:
 
-- a number (such as `404`), which will invoke the appropriate status handler
-- an object (such as `{ "Location": "http://nodejs.org" }`), which is used to set response headers
-- a string (such as `"hello!"`), which gets written as the response body
+- a number (such as `404`), which will invoke the appropriate status handler,
+- an object (such as `{ "Location": "http://nodejs.org" }`), which is used to set response headers,
+- a string (such as `"hello!"`), which gets written as the response body, or
 - an array containing any or all of the above, which lets us return full responses like this:
 
     ( fab )
