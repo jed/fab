@@ -1,23 +1,51 @@
 ﻿// the core function, doubling as namespace
 function fab() {
-  return function()
-    { return fab.dispatch.apply( arguments.callee, arguments ) }
-    ( fab.init, arguments );
+  function self(){ return fab.dispatch.apply( self, arguments ) };
+  return fab.init.apply( self, arguments );
 };
 
 fab.VERSION = "0.2.0";
 fab.escapeRegExp = function( str ) {
   return str.replace( /[-[\]{}()*+?.\\^$|,#\s]/g, "\\$&" );
-}
+};
+
+// adapted from http://github.com/documentcloud/underscore/
+var
+  isNumber = fab.isNumber = function( obj ) {
+    return +obj === obj || toString.call( obj ) === "[object Number]";
+  },
+  
+  isArray = fab.isArray = function( obj ) {
+    return !!( obj && obj.concat && obj.unshift );
+  },
+  
+  isUndefined = fab.isUndefined = function( obj ) {
+    return typeof obj == "undefined";
+  },
+  
+  isFunction = fab.isFunction = function( obj ) {
+      return !!( obj && obj.constructor && obj.call && obj.apply );
+  },
+  
+  isRegExp = fab.isRegExp = function( obj ) {
+      return !!( obj && obj.test && obj.exec &&
+        ( obj.ignoreCase || obj.ignoreCase === false ) );
+  },
+  
+  isString = fab.isString = function( obj ) {
+      return !!( obj === "" || (obj && obj.charCodeAt && obj.substr ) );
+  };
 
 // for commonJS module usage
-if ( typeof exports !== "undefined" ) {
+if ( !isUndefined( exports ) ) {
   exports.fab = fab;
 }
 
 // processing for a new fab
 fab.init = function() {
-  fab.extend( this, fab.prototype );
+  for ( var name in fab.prototype )
+    this[ name ] = fab.prototype[ name ];
+
   this.last = this;
   
   this.paths = [];
@@ -26,7 +54,7 @@ fab.init = function() {
   this.handler = fab.handle;
   this.status = fab.status;
   
-  return this( arguments );
+  return this.apply( this, arguments );
 }
 
 // determine action based on arguments
@@ -38,26 +66,22 @@ fab.dispatch = function( first ) {
     return this.handler.call( first, arguments[ 1 ] );
   }
     
-  if ( !first ) {
+  if ( isUndefined( first ) ) {
     return this.last;
-  }
-    
-  if ( first.callee && typeof first.length === "number" ) {
-    return this.apply( this, first );
   }
 
   if ( first === fab ) {
     return this( fab.end );
   }
     
-  if ( typeof first === "string" || first instanceof RegExp ) {
+  if ( isString( first ) || isRegExp( first ) ) {
     return fab.append.apply( this, arguments );
   }
 
-  if ( typeof first === "function" ) {
+  if ( isFunction( first ) ) {
     return first.apply( this, Array.prototype.slice.call( arguments, 1 ) );
   }
-    
+      
   throw "Unsupported signature.";
 };
 
@@ -70,11 +94,11 @@ fab.append = function( pattern, fn ) {
     matched = 0,
     child = fab();
 
-  if ( typeof pattern === "string" ) {
+  if ( isString( pattern ) ) {
     pattern = fab.escapeRegExp( pattern );
   }
 
-  else if ( pattern instanceof RegExp ) {
+  else if ( isRegExp( pattern ) ) {
     pattern = pattern.source;
     flags = pattern.toString().split( "/" ).pop();
   }
@@ -92,9 +116,7 @@ fab.append = function( pattern, fn ) {
   
   paths.splice( i, matched, [ new RegExp( pattern, flags ), child ] );
   
-  return typeof fn !== "undefined"
-    ? child[ "GET" ]( fn ).last
-    : child;
+  return isUndefined( fn ) ? child : child[ "GET" ]( fn ).last;
 }
 
 // default fab handler to perform routing
@@ -142,11 +164,11 @@ fab.handler = function( obj ) {
       while ( i < len ) respond( arguments[ i++ ] );
     }
     
-    if ( typeof fn === "function" ) {
+    if ( isFunction( fn ) ) {
       obj = fn.call( this, each );
     }
       
-    if ( typeof obj === "function" ) {
+    if ( isFunction( obj ) ) {
       return obj;
     }
 
@@ -155,12 +177,12 @@ fab.handler = function( obj ) {
       return;
     }
       
-    if ( typeof obj === "number" ) {
+    if ( isNumber( obj ) ) {
       return this.context.status[ obj ].apply( this, arguments );
     }
 
-    if ( typeof obj !== "undefined" ) {
-      each[ typeof obj.length === "number" && !obj.substr ? "apply" : "call" ]( undefined, obj );
+    if ( !isUndefined( obj ) ) {
+      each[ isArray( obj ) ? "apply" : "call" ]( undefined, obj );
       respond( null );      
     }
   }
@@ -174,11 +196,11 @@ fab.create = ( function( F ) {
   };
 })( function(){} );
 
-// each, adapted from jQuery
+// adapted from jQuery
 fab.each = function( obj, cb ) {
   var l = obj.length;
 
-  if ( l === undefined || typeof obj === "function" ) {
+  if ( isUndefined( l ) || isFunction( obj ) ) {
     for ( var name in obj ) {
       if ( cb.call( obj[ name ], name, obj[ name ] ) === false ) break;
     }
@@ -191,6 +213,10 @@ fab.each = function( obj, cb ) {
 
   return obj;
 };
+
+fab.end = function() {
+  return this;
+}
 
 // add method convenience methods to fab
 fab.each(
@@ -231,3 +257,5 @@ fab.each(
     };
   }
 );
+
+fab.log = function() { throw "Not implemented." }

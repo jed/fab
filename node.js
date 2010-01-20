@@ -4,8 +4,6 @@
   url = require( "url" ),
   sys = require( "sys" );
   
-fab.extend = process.mixin;
-
 fab.log = function() {
   sys.puts( Array.prototype.join.call( arguments, ", " ) );
 };
@@ -73,7 +71,7 @@ fab.response.prototype.init = function( response ) {
 };
 
 fab.url.prototype.init = function( str ) {
-  fab.extend( this, url.parse( str, true ) )
+  process.mixin( this, url.parse( str, true ) )
   
   var original = { length: 0 };
   this.capture = fab.create( original );
