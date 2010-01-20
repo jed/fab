@@ -1,7 +1,20 @@
 ﻿// the core function, doubling as namespace
 function fab() {
   function self(){ return fab.dispatch.apply( self, arguments ) };
-  return fab.init.apply( self, arguments );
+
+  for ( var name in fab.prototype ) {
+    self[ name ] = fab.prototype[ name ];
+  }
+
+  self.last = self;
+  
+  self.paths = [];
+  self.method = {};
+  self.status = fab.status;
+
+  self.handler = function(){ return fab.handle.apply( this, arguments ) };
+
+  return fab.dispatch.apply( self, arguments );
 };
 
 fab.VERSION = "0.2.0";
@@ -41,45 +54,22 @@ if ( !isUndefined( exports ) ) {
   exports.fab = fab;
 }
 
-// processing for a new fab
-fab.init = function() {
-  for ( var name in fab.prototype )
-    this[ name ] = fab.prototype[ name ];
-
-  this.last = this;
-  
-  this.paths = [];
-  this.method = {};
-
-  this.handler = fab.handle;
-  this.status = fab.status;
-  
-  return this.apply( this, arguments );
-}
-
 // determine action based on arguments
-fab.dispatch = function( first ) {
-  if ( first instanceof fab.request ) {
-    first.context = this;
-    first.cursor = 0;
-    first.url.pattern = "";
-    return this.handler.call( first, arguments[ 1 ] );
-  }
-    
-  if ( isUndefined( first ) ) {
+fab.dispatch = function( arg ) {
+  if ( isUndefined( arg ) ) {
     return this.last;
   }
 
-  if ( first === fab ) {
-    return this( fab.end );
+  if ( arg === fab ) {
+    return fab.end.apply( this, arguments );
   }
     
-  if ( isString( first ) || isRegExp( first ) ) {
+  if ( isString( arg ) || isRegExp( arg ) ) {
     return fab.append.apply( this, arguments );
   }
 
-  if ( isFunction( first ) ) {
-    return first.apply( this, Array.prototype.slice.call( arguments, 1 ) );
+  if ( isFunction( arg ) ) {
+    return arg.apply( this, Array.prototype.slice.call( arguments, 1 ) );
   }
       
   throw "Unsupported signature.";
@@ -116,15 +106,13 @@ fab.append = function( pattern, fn ) {
   
   paths.splice( i, matched, [ new RegExp( pattern, flags ), child ] );
   
-  return isUndefined( fn ) ? child : child[ "GET" ]( fn ).last;
+  return isUndefined( fn ) ? child : fab.GET.call( child, fn ).last;
 }
 
 // default fab handler to perform routing
 fab.handle = function( respond ) {
   var
     context = this.context,
-    method = context.method,
-    status = context.status,
     paths = context.paths,
     i = paths.length,
     match, next,
@@ -132,8 +120,11 @@ fab.handle = function( respond ) {
     path = url.pathname.substr( this.cursor );
 
   if ( !path ) {
-    return ( method[ this.method ] || method[ "*" ] || status[ 405 ] )
-      .apply( this, arguments );
+    return (
+      context.method[ this.method ] ||
+      context.method[ "*" ] ||
+      context.status[ 405 ]
+    ).apply( this, arguments );
   }
 
   while ( i-- ) {
@@ -148,9 +139,9 @@ fab.handle = function( respond ) {
       Array.prototype.push.apply( url.capture.original, match );
     }
 
-    return next[ 1 ].handler.apply( this, arguments );
+    return fab.handle.apply( this, arguments );
   }
-  
+
   status[ 404 ].apply( this, arguments );
 }
 
@@ -168,10 +159,6 @@ fab.handler = function( obj ) {
       obj = fn.call( this, each );
     }
       
-    if ( isFunction( obj ) ) {
-      return obj;
-    }
-
     if ( obj instanceof fab.url ) {
       each( 302, { "Location": obj.toString() }, "Moved to ", null );
       return;
@@ -183,7 +170,7 @@ fab.handler = function( obj ) {
 
     if ( !isUndefined( obj ) ) {
       each[ isArray( obj ) ? "apply" : "call" ]( undefined, obj );
-      respond( null );      
+      if ( !isFunction( obj ) ) respond( null );      
     }
   }
 };
@@ -250,12 +237,16 @@ fab.each( [ 1, 6, 5, 15, 5 ], function( c, i ) {
 
 // create fab constructors
 fab.each(
-  "request response url cookie".split(" "),
+  "url".split(" "),
   function( i, name ) {
     fab[ name ] = function() {
       return fab[ name ].prototype.init.apply( this, arguments );
     };
   }
 );
+
+fab.end = function() {
+  return this.handler;
+}
 
 fab.log = function() { throw "Not implemented." }

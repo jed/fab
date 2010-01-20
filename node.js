@@ -9,65 +9,56 @@ fab.log = function() {
 };
 
 fab.end = function() {
-  return fab.adapter( this );
+  return fab.adapter.call( this, this.handler );
 }
 
 fab.adapter = function( handler ) {
+  var self = this;
   return function( request, response ) {
-    var body = handler(
-      new fab.request( request ),
-      new fab.response( response )
-    );
-    
-    if ( typeof body === "function" ) {
-      request
-        .addListener( "body", body )
-        .addListener( "complete", function(){ body( null ) } );
-    }
-  }
-};
+    var
+      status = 200,
+      headers = {};
 
-fab.request.prototype.init = function( request ) {  
-  this.arguments = arguments;
-  this.method = request.method;  
-  this.headers = request.headers;
-  this.url = new fab.url( "http://" + this.headers.host + request.url );
-};
-
-fab.response.prototype.init = function( response ) {
-  var
-    status = 200,
-    headers = {},
-
-    respond = function( data ) {
-      if ( data === null )
-        response.finish();
-        
-      else switch ( typeof data ) {
-        case "number":
-          status = data;
-          break;
-
-        case "object":
-          fab.extend( headers, data );
-          break;
+    handler.call(
+      {
+        context: self,
+        cursor: 0,
+        method: request.method,
+        headers: request.headers,
+        url: new fab.url( "http://" + request.headers.host + request.url )
+      },
+      function( data ) {
+        if ( data === null )
+          response.finish();
           
-        default:
-          if ( headers ) {
-            response.sendHeader( status, headers );
-            headers = false;
-          };
-          
-          response.sendBody( data.toString(), respond.encoding );
-          break;
-      }
-      
-      return respond;
-    };
+        else switch ( typeof data ) {
+          case "number":
+            status = data;
+            break;
   
-  respond.arguments = arguments;
-  respond.encoding = "ascii";
-  return respond;
+          case "object":
+            fab.extend( headers, data );
+            break;
+            
+          case "function":
+            request
+              .addListener( "body", data )
+              .addListener( "complete", function(){ data( null ) } );            
+            
+          default:
+            if ( headers ) {
+              response.sendHeader( status, headers );
+              headers = false;
+            };
+            
+            response.sendBody( data.toString(), "ascii" );
+            break;
+        }
+        
+        return arguments.callee;
+      }
+    );
+  }
 };
 
 fab.url.prototype.init = function( str ) {
@@ -76,6 +67,8 @@ fab.url.prototype.init = function( str ) {
   var original = { length: 0 };
   this.capture = fab.create( original );
   this.capture.original = original;
+  
+  this.pattern = "";
 
   return this;
 }
