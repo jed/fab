@@ -1,6 +1,5 @@
 ﻿var
   fab = exports.fab = require( "./fab" ).fab,
-  http = require( "http" ),
   url = require( "url" ),
   sys = require( "sys" );
   
@@ -28,31 +27,31 @@ fab.adapter = function( handler ) {
         url: new fab.url( "http://" + request.headers.host + request.url )
       },
       function( data ) {
-        if ( data === null )
+        if ( data === null ) {
           response.finish();
+        }
           
-        else switch ( typeof data ) {
-          case "number":
-            status = data;
-            break;
+        else if ( fab.isNumber( data ) ) {
+          status = data;
+        }
   
-          case "object":
-            fab.extend( headers, data );
-            break;
-            
-          case "function":
-            request
-              .addListener( "body", data )
-              .addListener( "complete", function(){ data( null ) } );            
-            
-          default:
-            if ( headers ) {
-              response.sendHeader( status, headers );
-              headers = false;
-            };
-            
-            response.sendBody( data.toString(), "ascii" );
-            break;
+        else if ( typeof data === "object" ) {
+          fab.extend( headers, data );
+        }
+        
+        else if ( fab.isFunction( data ) ) {
+          request
+            .addListener( "body", data )
+            .addListener( "complete", function(){ data( null ) } );
+        }
+        
+        else {
+          if ( headers ) {
+            response.sendHeader( status, headers );
+            headers = false;
+          };
+          
+          response.sendBody( data.toString(), "ascii" );
         }
         
         return arguments.callee;
