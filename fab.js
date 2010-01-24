@@ -1,4 +1,4 @@
-﻿// the core function, doubling as namespace
+﻿// the generator function, doubling as namespace
 function fab() {
   function self(){ return fab.dispatch.apply( self, arguments ) };
 
@@ -56,20 +56,25 @@ if ( !isUndefined( exports ) ) {
 
 // determine action based on arguments
 fab.dispatch = function( arg ) {
+  // end current context
   if ( isUndefined( arg ) ) {
     return this.last;
   }
-
+  
+  // end (fab) chain, return listener
   if ( arg === fab ) {
     return fab.end.apply( this, arguments );
   }
-    
+  
+  // append path to current context    
   if ( isString( arg ) || isRegExp( arg ) ) {
     return fab.append.apply( this, arguments );
   }
-
+  
+  // apply middleware
   if ( isFunction( arg ) ) {
-    return arg.apply( this, Array.prototype.slice.call( arguments, 1 ) );
+    this.handler = arg( this.handler );
+    return this;
   }
       
   throw "Unsupported signature.";
