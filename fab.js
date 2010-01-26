@@ -50,8 +50,8 @@ var
   };
 
 // for commonJS module usage
-if ( !isUndefined( exports ) ) {
-  exports.fab = fab;
+if ( !isUndefined( module ) && !isUndefined( module.exports ) ) {
+  module.exports = fab;
 }
 
 // determine action based on arguments

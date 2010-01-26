@@ -1,5 +1,5 @@
 ﻿var
-  fab = exports.fab = require( "./fab" ).fab,
+  fab = module.exports = require( "./fab" ),
   url = require( "url" ),
   sys = require( "sys" );
   
