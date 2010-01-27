@@ -1,0 +1,6 @@
+( fab )
+  ( "/hello" )
+    [ "GET" ]( "hello!" )
+    ( "/world", "hello world!" )
+  ()
+( fab )

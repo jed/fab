@@ -73,7 +73,7 @@ fab.dispatch = function( arg ) {
   
   // apply middleware
   if ( isFunction( arg ) ) {
-    this.handler = arg( this.handler );
+    this.handler = fab.handler( arg( this.handler ) );
     return this;
   }
       
@@ -147,7 +147,7 @@ fab.handle = function( respond ) {
     return fab.handle.apply( this, arguments );
   }
 
-  status[ 404 ].apply( this, arguments );
+  context.status[ 404 ].apply( this, arguments );
 }
 
 // turn a value into a fab handler

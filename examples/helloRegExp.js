@@ -1,0 +1,6 @@
+( fab )
+  ( "/hello" )
+    [ "GET" ]( "hello!" )
+    ( /\/(\w+)/, "hello you!" )
+  ()
+( fab )

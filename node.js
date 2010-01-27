@@ -1,7 +1,8 @@
 ﻿var
   fab = module.exports = require( "./fab" ),
   url = require( "url" ),
-  sys = require( "sys" );
+  sys = require( "sys" ),
+  args = process.ARGV;
   
 fab.log = function() {
   sys.puts( Array.prototype.join.call( arguments, ", " ) );
@@ -36,7 +37,7 @@ fab.adapter = function( handler ) {
         }
   
         else if ( typeof data === "object" ) {
-          fab.extend( headers, data );
+          process.mixin( headers, data );
         }
         
         else if ( fab.isFunction( data ) ) {
@@ -90,3 +91,20 @@ fab.url.prototype.toString = function() {
 
   return url.format( this );
 };
+
+// if this file is run (not required), launch server
+if ( args[ 1 ] == __filename ) {
+  var port = 0xFAB, file = args[ 2 ];
+  
+  if ( args[ 3 ] == "-p" )
+    port = +args[ 4 ];
+  
+  require( "posix" )
+    .cat( file )
+    .addCallback( function( app ) {
+      require( "http" )
+        .createServer( eval( app ) )
+        .listen( port )
+    });
+
+}
