@@ -1,1 +1,1 @@
-$ node fab/node.js fab/examples/hello.js -p 4011
+$ node fab/lib/node.js fab/examples/hello.js -p 4011
