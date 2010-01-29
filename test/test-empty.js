@@ -5,9 +5,12 @@ var
   http = require( "http" ),
   assert = require( "assert" ),
   
-  listener = ( fab )( fab ),
-  server = http.createServer( listener ),
-  client = http.createClient( PORT );
+  client = http.createClient( PORT ),
+  server = http.createServer( 
+  
+    ( fab )( fab )
+  
+  );
   
 server.listen( PORT );
 
