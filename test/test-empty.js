@@ -14,6 +14,6 @@ server.listen( PORT );
 client
   .request( "/" )
   .finish( function( response ) {
-    assert.equal( response.statusCode, 405 );
+    assert.equal( response.statusCode, 404 );
     server.close();
   });
