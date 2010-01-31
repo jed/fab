@@ -1,1 +1,1 @@
-$ node fab/examples/hello2.js
+node fab/examples/hello2.js
