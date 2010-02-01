@@ -21,5 +21,5 @@ client
   .request( "/" )
   .finish( function( response ) {
     assert.equal( response.headers[ "content-length" ], "12" );
-    server.close()
+    server.close();
   });
