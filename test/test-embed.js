@@ -11,18 +11,16 @@ var
     ( fab )
       ( "/path1", "this path will be added" )
       ( "/path2", "this path will overwrite" )
-    ();
+    (),
   
-
-
-outsideApp =
-  ( fab )
-    ( "/path2", "this path will be overwritten" )
-    ( "/path3", "this path will not be overwritten" )
-    ( insideApp )
-  ()
-
-server = http.createServer( outsideApp( fab ) );
+  outsideApp =
+    ( fab )
+      ( "/path2", "this path will be overwritten" )
+      ( "/path3", "this path will not be overwritten" )
+      ( insideApp )
+    ( fab ),
+  
+  server = http.createServer( outsideApp );
   
 server.listen( PORT );
 
