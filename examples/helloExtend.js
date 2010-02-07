@@ -1,6 +1,6 @@
 updateGoodbye =
   ( fab )
-    ( "/goodbye", "goodbye, i just replaced the existing handler" )
+    ( "/goodbye", "i replaced the existing handler" )
   ()
 
 ( fab )

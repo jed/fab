@@ -4,7 +4,7 @@
       var buffer = "";
       return function( data ) {
         if ( data !== null ) buffer += data;
-        else respond( "Hello, " + buffer.length + " characters!", null );
+        else respond( buffer.length + " characters sent", null );
       }
     })
   ()

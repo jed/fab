@@ -1,18 +1,30 @@
 ( fab )
-  ( "/hello1", [ 200, { "Content-Length": 6 }, "hello!" ] )
+  ( "/hello1", {
+    status: 200,
+    headers: { "Content-Length": 6 },
+    body: "hello!"
+  })
 
   ( "/hello2", function() {
-    return [ 200, { "Content-Length": 6 }, "hello!" ];
+    return {
+      status: 200,
+      headers: { "Content-Length": 6 },
+      body: "hello!"
+    };
   })
 
   ( "/hello3", function() {
-    respond( 200, { "Content-Length": 6 }, "hello!", null );
+    respond({
+      status: 200,
+      headers: { "Content-Length": 6 },
+      body: "hello!"
+    }, null );
   })
 
   ( "/hello4", function() {
-    respond( 200 );
-    respond( { "Content-Length": 6 } );
-    respond( "hello!" );
+    respond( { status: 200 } );
+    respond( { headers: { "Content-Length": 6 } } );
+    respond( { body: "hello!" } );
     respond( null );
   })
 ( fab )

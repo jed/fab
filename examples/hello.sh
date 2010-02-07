@@ -1,1 +1,0 @@
-node fab/lib/node.js fab/examples/hello.js -p 4011

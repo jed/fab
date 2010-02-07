@@ -13,13 +13,13 @@ var
         assert.equal( onearg.length, 1 );
         assert.notEqual( this, respond );
         
-        respond( this.url.pathname, null );
+        return this.url.pathname;
       } )
       ( "/twoargs", function twoarg( request, respond ) {
         assert.equal( twoarg.length, 2 );
         assert.equal( this, request );
 
-        respond( this.url.pathname, null );
+        return this.url.pathname;
       } )
     ( fab )
   
