@@ -10,7 +10,13 @@ var
   
     ( fab )
       ( require( "../middleware/addContentLength" ) )
-      ( "/", "hello world." )
+      ( "/", function( respond ) {
+        respond( "hello" )
+        respond( " " )
+        respond( "world" )
+        respond( "." )
+        respond( null )
+      })
     ( fab )
   
   );
@@ -20,6 +26,6 @@ server.listen( PORT );
 client
   .request( "/" )
   .finish( function( response ) {
-    assert.equal( response.headers[ "content-length" ], "12" );
+    assert.equal( +response.headers[ "content-length" ], 12 );
     server.close();
   });
