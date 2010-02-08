@@ -38,14 +38,12 @@ server.listen(PORT);
 client
   .request('/a')
   .finish(function(response) {
-    puts('a');
     expectedCallbacks.a2--;
   });
 
 client
   .request('/b')
   .finish(function(response) {
-    puts('b');
     expectedCallbacks.b2--;
     clearTimeout(timeout);
     server.close();
