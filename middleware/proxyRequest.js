@@ -17,7 +17,6 @@
 var
   fab = require( "fab" ),
   http = require( "http" ),
-  url = require( "url" ),
   path = require( "path" ),
   posix = require( "posix" ),
   handlers = {
@@ -66,21 +65,23 @@ var
 
 module.exports = function( handler ) {
   return function( request, respond ) {
-    var loc;
+    var url;
     
     return handler.call( this, function( data ) {
       if ( data === null ) {
-        if ( loc )
-          handlers[ loc.protocol || "file:" ]( loc ).call( this, respond );
+        if ( url ) {
+          url.protocol = url.protocol || "file:"
+          handlers[ url.protocol ]( url ).call( this, respond );
+        }
 
         else respond( 500, null );
       }
 
       else if ( data.headers )
-        loc = url.parse( data.headers.location );
+        url = new fab.url( data.headers.location );
       
       else if ( data.body instanceof fab.url )
-        loc = data.body;
+        url = data.body;
     })
   }
 }
