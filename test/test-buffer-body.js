@@ -23,7 +23,7 @@ var
         [ "GET" ]( handler )
       ()
       ( "/buffered" )
-        ( require( "../middleware/bufferBody" ) )
+        ( require( "../middleware/buffer" ) )
         [ "GET" ]( handler )
       ()
     ( fab )

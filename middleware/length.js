@@ -1,6 +1,6 @@
 // adds the content length header.
 module.exports = function( handler ) {
-  handler = fab.handler( require( "./bufferBody" )( handler ) );
+  handler = fab.handler( require( "./buffer" )( handler ) );
 
   return function( respond ) {
     handler.call( this, function( data ) {
@@ -8,7 +8,7 @@ module.exports = function( handler ) {
         var length = process._byteLength( data.body );
 
         data.headers = data.headers || {};
-        data.headers[ "Content-Length" ] = length.toString( 10 );
+        data.headers[ "content-length" ] = length.toString( 10 );
       }
           
       respond( data );

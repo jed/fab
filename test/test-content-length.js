@@ -9,7 +9,7 @@ var
   server = http.createServer( 
   
     ( fab )
-      ( require( "../middleware/addContentLength" ) )
+      ( require( "../middleware/length" ) )
       ( "/", function( respond ) {
         respond( "hello" )
         respond( " " )

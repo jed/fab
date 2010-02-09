@@ -5,7 +5,7 @@
 // the "file:" protocol is used by default.
 // 
 // ( fab )
-//   ( require( "fab/middleware/proxyRequest" ) )
+//   ( require( "fab/middleware/dispatch" ) )
 //
 //   ( "/httpByHeader", { headers: { location: "http://fabjs.org" } } )
 //   ( "/httpByBody", new fab.url( "http://fabjs.org" ) )
