@@ -36,12 +36,12 @@ var
       http
         .createClient(
           url.port || 80,
-          request.headers.host = url.hostname
+          this.headers.host = url.hostname
         )
         .request(
-          request.method,
+          this.method,
           url.pathname + ( url.search || "" ),
-          request.headers
+          this.headers
         )
         .finish( function( response ) {
           response.setBodyEncoding( "utf8" );
@@ -66,7 +66,7 @@ module.exports = function( handler ) {
     return handler.call( this, function( data ) {
       if ( data === null ) {
         if ( url )
-          handlers[ url.protocol || "file:" ].call( this, respond, url );
+          handlers[ url.protocol || "file:" ].call( request, respond, url );
 
         else respond( 500, null );
       }
