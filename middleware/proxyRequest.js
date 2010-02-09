@@ -21,44 +21,40 @@ var
   posix = require( "posix" ),
   handlers = {
 
-    "file:": function( url ) {
-      return function( respond ) {
-        posix
-          .cat( path.join( process.cwd(), url.pathname ) )
-          .addCallback( function( data ) {
-            respond( data, null )
-          })
-          .addErrback( function() {
-            respond( 500, null )
-          })
-      }
+    "file:": function( respond, url ) {
+      posix
+        .cat( path.join( process.cwd(), url.pathname ) )
+        .addCallback( function( data ) {
+          respond( data, null )
+        })
+        .addErrback( function() {
+          respond( 500, null )
+        })
     },
     
-    "http:": function( url ) {
-      return function( respond ) {
-        http
-          .createClient(
-            url.port || 80,
-            request.headers.host = url.hostname
-          )
-          .request(
-            request.method,
-            url.pathname + ( url.search || "" ),
-            request.headers
-          )
-          .finish( function( response ) {
-            response.setBodyEncoding( "utf8" );
-    
-            response
-              .addListener( "body", respond )
-              .addListener( "complete", function(){ respond( null ) } );
-    
-            respond({
-              status: response.statusCode,
-              headers: response.headers
-            });
+    "http:": function( respond, url ) {
+      http
+        .createClient(
+          url.port || 80,
+          request.headers.host = url.hostname
+        )
+        .request(
+          request.method,
+          url.pathname + ( url.search || "" ),
+          request.headers
+        )
+        .finish( function( response ) {
+          response.setBodyEncoding( "utf8" );
+  
+          response
+            .addListener( "body", respond )
+            .addListener( "complete", function(){ respond( null ) } );
+  
+          respond({
+            status: response.statusCode,
+            headers: response.headers
           });
-      }
+        });
     }
 
   };
@@ -69,10 +65,8 @@ module.exports = function( handler ) {
     
     return handler.call( this, function( data ) {
       if ( data === null ) {
-        if ( url ) {
-          url.protocol = url.protocol || "file:"
-          handlers[ url.protocol ]( url ).call( this, respond );
-        }
+        if ( url )
+          handlers[ url.protocol || "file:" ].call( this, respond, url );
 
         else respond( 500, null );
       }
