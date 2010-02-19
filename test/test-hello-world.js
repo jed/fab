@@ -18,12 +18,13 @@ server.listen( PORT );
 
 client
   .request( "/" )
-  .finish( function( response ) {
+  .addListener( "response", function( response ) {
     var body = "";
     response
-      .addListener( "body", function( data ) { body += data })
-      .addListener( "complete", function() {
+      .addListener( "data", function( data ) { body += data })
+      .addListener( "end", function() {
         assert.equal( body, "hello world." );
         server.close();
       });
-  });
+  })
+  .close();

@@ -16,7 +16,8 @@ server.listen( PORT );
 
 client
   .request( "/" )
-  .finish( function( response ) {
+  .addListener( "response", function( response ) {
     assert.equal( response.statusCode, 404 );
     server.close();
-  });
+  })
+  .close();

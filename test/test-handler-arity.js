@@ -29,10 +29,12 @@ server.listen( PORT );
 
 client
   .request( "/onearg" )
-  .finish( function( response ) {
-    response.addListener( "complete", function(){
+  .addListener( "response", function( response ) {
+    response.addListener( "end", function(){
       client
         .request( "/twoargs" )
-        .finish( function() { server.close() })
+        .addListener( "response",  function() { server.close() })
+        .close();
     })
-});
+  })
+  .close();

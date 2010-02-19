@@ -26,12 +26,14 @@ server.listen( PORT );
 
 client
   .request( "/path2" )
-  .finish( function( response ) {
+  .addListener( "response", function( response ) {
     var body = "";
     response
-      .addListener( "body", function( data ){ body += data } )
-      .addListener( "complete", function() {
+      .addListener( "data", function( data ){ body += data } )
+      .addListener( "end", function() {
         assert.equal( body, "this path will overwrite" )
         server.close();
       });
-  });
+  })
+  .close();
+  

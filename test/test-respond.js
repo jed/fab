@@ -37,17 +37,19 @@ server.listen(PORT);
 
 client
   .request('/a')
-  .finish(function(response) {
+  .addListener( "response", function(response) {
     expectedCallbacks.a2--;
-  });
+  })
+  .close();
 
 client
   .request('/b')
-  .finish(function(response) {
+  .addListener( "response", function(response) {
     expectedCallbacks.b2--;
     clearTimeout(timeout);
     server.close();
-  });
+  })
+  .close();
 
 process.addListener('exit', function() {
   checkCallbacks(expectedCallbacks);

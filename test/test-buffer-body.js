@@ -34,21 +34,23 @@ server.listen( PORT );
 
 client
   .request( "/unbuffered" )
-  .finish( function( response ) {
+  .addListener( "response", function( response ) {
     response
-      .addListener( "body", function(){ unbufferedCount-- } )
-      .addListener( "complete", function() {
+      .addListener( "data", function(){ unbufferedCount-- } )
+      .addListener( "end", function() {
         assert.equal( unbufferedCount, 0 );
 
         client
           .request( "/buffered" )
-          .finish( function( response ) {
+          .addListener( "response", function( response ) {
             response
-              .addListener( "body", function(){ bufferedCount-- } )
-              .addListener( "complete", function() {
+              .addListener( "data", function(){ bufferedCount-- } )
+              .addListener( "end", function() {
                 assert.equal( bufferedCount, 0 );
                 server.close();
               });
-          });
+          })
+          .close();
       });
-  });
+  })
+  .close();

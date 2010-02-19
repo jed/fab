@@ -25,7 +25,8 @@ server.listen( PORT );
 
 client
   .request( "/" )
-  .finish( function( response ) {
+  .addListener( "response", function( response ) {
     assert.equal( +response.headers[ "content-length" ], 12 );
     server.close();
-  });
+  })
+  .close();
