@@ -13,7 +13,7 @@
     };
   })
 
-  ( "/hello3", function() {
+  ( "/hello3", function( respond ) {
     respond({
       status: 200,
       headers: { "Content-Length": 6 },
@@ -21,7 +21,7 @@
     }, null );
   })
 
-  ( "/hello4", function() {
+  ( "/hello4", function( respond ) {
     respond( { status: 200 } );
     respond( { headers: { "Content-Length": 6 } } );
     respond( { body: "hello!" } );
