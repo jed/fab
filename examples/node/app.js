@@ -6,6 +6,11 @@ app = fab
 
 ()
   ( fab.listener )
+  
+  ( fab.basicAuth(
+    "Welcome to (fab)",
+    function( user, pass ){ return pass == "sesame" }
+  ))
 
   ( "/a" )
     ( "/a" )
@@ -32,6 +37,6 @@ app = fab
 
 ()
 
-http.createServer( app ).listen( 8000 )
+http.createServer( app ).listen( 0xFAB )
 
 require( "repl" ).start( "> " )
