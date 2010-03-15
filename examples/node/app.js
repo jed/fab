@@ -15,9 +15,22 @@ app = fab
 
   ( "/b", "/b path" )
 
-  ( "/c", "/c", "/c/c path" )
+  ( "/c", "/c", function( back ) {
+    return function( head ) {
+      back({ body: JSON.stringify( head.url ) })()    
+    }
+  })
+  
+  ( "/d", fab.method( "GET", "POST" ), "YEP!" )
+
+  ( "/e/", /(\w{2})(\w{2})/, function( back ) {
+    return function( head ) {
+      back({ body: JSON.stringify( head.url.capture ) })()    
+    }
+  })
 
 ()
 
-http.createServer( app ).listen( 4011 )
+http.createServer( app ).listen( 8000 )
+
 require( "repl" ).start( "> " )

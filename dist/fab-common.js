@@ -66,6 +66,35 @@ fab.Function = function( fn ) {
     };
 }
 
+fab.method = function() {
+  var
+    methods = {},
+    len = arguments.length;
+  
+  for ( var i = 0; i < len; i++ ) {
+    methods[ arguments[ i ] ] = true;
+  }
+    
+  return function() {
+    var hit = arguments[ 0 ];
+
+    return function() {
+      var miss = arguments[ 0 ] || fab.status( 405 )();
+
+      return function( respond ) {
+        return function( head ) {
+          var app = head.method in methods ? hit : miss;
+          
+          app = app( respond );
+          if ( app ) app = app( head );
+          
+          return app;
+        }
+      }
+    }
+  }
+}
+
 fab.Number = function( num ) {
   return fab.status( num );
 }
@@ -73,8 +102,30 @@ fab.Number = function( num ) {
 fab.path = function() {
   var
     pattern = arguments[ 0 ],
-    length = pattern.length;
+    match = {
+      String: function( url ) {
+        var path = url.pathname;
 
+        if ( path.indexOf( pattern ) ) return;
+
+        url.pathname = path.substr( pattern.length );
+        return url;
+      },
+      
+      RegExp: function( url ) {
+        var path = url.pathname, matched;
+
+        if ( path.search( pattern ) ) return;
+        
+        matched = path.match( pattern );
+        
+        url.pathname = path.substr( matched.shift().length );
+        url.capture = url.capture || [];
+        url.capture.push.apply( url.capture, matched );
+        return url;
+      }
+    }[ pattern.constructor.name ];
+    
   return function() {
     var hit = arguments[ 0 ];
 
@@ -83,10 +134,12 @@ fab.path = function() {
 
       return function( respond ) {
         return function( head ) {
-          var app = miss;
+          var
+            app = miss,
+            url = match( head.url );
           
-          if ( !head.url.indexOf( pattern ) ) {
-            head.url = head.url.substr( length );
+          if ( url ) {
+            head.url = url;
             app = hit;
           }
           
@@ -98,6 +151,10 @@ fab.path = function() {
       }
     }
   }
+}
+
+fab.RegExp = function( re ) {
+  return fab.path( re );
 }
 
 fab.status = function( code ) {
