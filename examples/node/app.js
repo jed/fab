@@ -21,7 +21,8 @@ app = fab
     }
   })
   
-  ( "/d", fab.method( "GET", "POST" ), "YEP!" )
+  ( "/GETorPOST", fab.method( "GET", "POST" ), "OK" )
+  ( "/GET", fab.method.GET, "OK" )
 
   ( "/e/", /(\w{2})(\w{2})/, function( back ) {
     return function( head ) {
