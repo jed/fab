@@ -1,3 +1,0 @@
-( fab )
-  ( "/hello", "hello!" )
-( fab )

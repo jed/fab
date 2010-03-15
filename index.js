@@ -1,3 +1,2 @@
-﻿if ( typeof process == "object" && process.ARGV[ 0 ] == "node" ) {
-  fab = module.exports = require( "./lib/node" );
-}
+// this is a convenience wrapper for the node distribution
+module.exports = require( "./dist/fab-node" );
