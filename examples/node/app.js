@@ -7,10 +7,10 @@ app = fab
 ()
   ( fab.listener )
   
-  ( fab.basicAuth(
-    "Welcome to (fab)",
-    function( user, pass ){ return pass == "sesame" }
-  ))
+//   ( fab.basicAuth(
+//     "Welcome to (fab)",
+//     function( user, pass ){ return pass == "sesame" }
+//   ))
 
   ( "/a" )
     ( "/a" )
