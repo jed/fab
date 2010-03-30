@@ -1,0 +1,1 @@
+fab.RegExp = fab.path;
