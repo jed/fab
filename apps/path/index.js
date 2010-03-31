@@ -1,4 +1,4 @@
-fab.path = function() {
+exports.path = function() {
   var
     pattern = arguments[ 0 ],
     match = {

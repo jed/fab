@@ -1,4 +1,4 @@
-fab.template = function( str ) {
+exports.tmpl = function( str ) {
 
   // adapted from underscore's adaptation of resig's tmpl
   // http://github.com/documentcloud/underscore/

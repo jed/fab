@@ -1,4 +1,4 @@
-fab.status = function( code ) {
+exports.status = function( code ) {
   return function( fwd ) {
     if ( fwd ) { /* TODO: status handler */ }
 

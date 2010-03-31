@@ -1,6 +1,6 @@
 p = require( "sys" ).p
 http = require( "http" );
-fab = require( "../../" );
+fab = require( "../" );
 
 app = fab
 

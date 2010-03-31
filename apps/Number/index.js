@@ -1,1 +1,1 @@
-fab.Number = fab.status;
+exports.Number = exports.status;

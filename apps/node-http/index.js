@@ -1,4 +1,4 @@
-fab.http = function() {
+exports.http = function() {
   var
     url = require( "url" ),
     http = require( "http" ),

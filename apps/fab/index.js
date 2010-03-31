@@ -1,4 +1,4 @@
-function fab() {
+exports.fab = function() {
   var args = [];
   
   return arguments.length
@@ -14,7 +14,7 @@ function fab() {
     if ( !l ) return evaluate();
     
     while ( i < l ) {
-      a[ i ] = ( fab[ a[ i ].constructor.name ] || fab.body )( a[ i ] );
+      a[ i ] = ( fab[ a[ i ].constructor.name ] || fab[ undefined ] )( a[ i ] );
       if ( a[ i++ ].length ) break;
     }
     

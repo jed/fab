@@ -1,4 +1,4 @@
-fab.Function = function( fn ) {
+exports.Function = function( fn ) {
   var i = fn.length, args = [];
 
   return i < 2 ? fn :

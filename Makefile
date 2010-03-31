@@ -1,4 +1,4 @@
 fab:
-	@node ./builds/make.js
+	@node ./build.js
 
 .PHONY: fab

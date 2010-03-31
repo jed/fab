@@ -1,4 +1,4 @@
-fab.String = function() {
+exports.String = function() {
   var str = arguments[ 0 ];
   return function() {
     var app = arguments[ 0 ];

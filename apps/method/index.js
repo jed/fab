@@ -1,4 +1,4 @@
-fab.method = ( function( names, name ) {
+exports.method = ( function( names, name ) {
   while ( name = names.pop() ) method[ name ] = method( name );
     
   return method;

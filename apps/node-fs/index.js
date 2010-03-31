@@ -1,4 +1,4 @@
-fab.fs = function() {
+exports.fs = function() {
   var
     fs = require( "fs" ),
     path = require( "path" ),

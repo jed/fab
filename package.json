@@ -1,0 +1,7 @@
+{
+    "name":         "(fab)",
+    "description":  "A pure javascript DSL for building async web apps",
+    "keywords":     [ "javascript", "web", "framework" ],
+    "author":       "Jed Schmidt",
+    "version":      "0.3.0"
+}

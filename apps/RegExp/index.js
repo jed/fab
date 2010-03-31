@@ -1,1 +1,1 @@
-fab.RegExp = fab.path;
+exports.RegExp = exports.path;

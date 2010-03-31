@@ -1,4 +1,4 @@
-fab.listener = function() {
+exports.listener = function() {
 
   var
     app = arguments[ 0 ],
