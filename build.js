@@ -28,7 +28,12 @@ rm( distsDir, function() {
   fs.mkdirSync( distsDir, 0777 );
 
   var contents = requires.map( function( dir ) {
-    return fs.readFileSync( path.join( dir, "index.js" ) )
+    return [
+      "/*",
+        fs.readFileSync( path.join( dir, "README.md" ) ),
+      "*/",
+      fs.readFileSync( path.join( dir, "index.js" ) )
+    ].join( "\n\n" );
   });
   
   contents.unshift(

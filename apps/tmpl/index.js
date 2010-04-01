@@ -1,8 +1,4 @@
 exports.tmpl = function( str ) {
-
-  // adapted from underscore's adaptation of resig's tmpl
-  // http://github.com/documentcloud/underscore/
-  
   var fn = new Function( "obj",
     "var p=[],print=function(){p.push.apply(p,arguments);};" +
     "with(obj){p.push('" +
