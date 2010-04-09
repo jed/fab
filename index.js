@@ -152,30 +152,6 @@ fab.serialize = function( app ) {
   }
 }
 
-fab.buffer = function( app ) {
-  // TODO: add inbound buffer
-  return function() {
-    var out = this, ret, type;
-    
-    return app.call( function listener( obj ) {
-      if ( !obj ) out({ body: ret });
-      
-      else if ( obj )
-      
-      
-
-      if ( obj && typeof obj.body == "string" ) {
-        ( obj.headers = obj.headers || {} )
-          [ "content-length" ] = process._byteLength( obj.body );
-      }
-      
-      out = out.apply( this, arguments );
-      
-      return listener;
-    })
-  }
-}
-
 fab.contentLength = function( app ) {
   return function() {
     var out = this;
