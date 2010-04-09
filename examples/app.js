@@ -1,37 +1,21 @@
-p = require( "sys" ).p
 http = require( "http" );
-fab = require( "../" );
+fab = require( "fab" );
 
-app = fab
+http.createServer(
 
-()
-  ( fab.listener )
+  fab
+
+  ( fab.nodejs )
+
+  ( fab.contentLength )
+  ( fab.serialize )
   
-  ( "/a" )
-    ( "/a" )
-      ( "/a/a path" )
+  ( /\/html/ )
+    ( fab.tmpl, "The time is <%= this.date %>." )
     ()
-  ()
 
-  ( "/b", "/b path" )
-
-  ( "/c", "/c", function( back ) {
-    return function( head ) {
-      back({ body: JSON.stringify( head.url ) })()    
-    }
-  })
+  ( { date: new Date } )
   
-  ( "/GETorPOST", fab.method( "GET", "POST" ), "OK" )
-  ( "/GET", fab.method.GET, "OK" )
-
-  ( "/e/", /(\w{2})(\w{2})/, function( back ) {
-    return function( head ) {
-      back({ body: JSON.stringify( head.url.capture ) })()    
-    }
-  })
-
-()
-
-http.createServer( app ).listen( 0xFAB )
-
-require( "repl" ).start( "> " )
+).listen( 0xFAB )
+    
+require( "repl" ).start( "> " );

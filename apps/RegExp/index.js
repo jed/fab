@@ -1,1 +1,0 @@
-exports.RegExp = exports.path;
