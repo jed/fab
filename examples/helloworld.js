@@ -8,18 +8,19 @@ require( "http" ).createServer(
   
   ( /\/hello/ )
   
-    ( fab.tmpl, "Hello, <%= this %>!" )
+    ( fab.tmpl, "Hello, <%= this[ 0 ] %>!" )
 
     ( /\/(\w+)/ )
-      ( function() {
-        var out = this;
-        return function( head ) {
-          out({ body: head.url.capture[ 0 ] })();
-        }
-      })
-      
-    ( "world" )
+      ( capture )
+      ( [ "world" ] )
   
   ( 404 )
 
 ).listen( 0xFAB );
+
+function capture() {
+  var out = this;
+  return function( head ) {
+    out({ body: head.url.capture })();
+  }
+}

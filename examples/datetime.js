@@ -7,7 +7,7 @@ require( "http" ).createServer(
   ( fab.nodejs )
   
   ( fab.contentLength )
-  ( fab.serialize )
+  ( fab.stringify )
   
   ( /\/date/ )
     ( fab.tmpl, "The date is <%= this.toDateString() %>." )

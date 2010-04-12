@@ -1,8 +1,4 @@
-sys = require( "sys" )
-
-module.exports = fab;
-
-function fab() {
+fab = function() {
   var stack = [];
   
   return collect.apply( this, arguments );
@@ -44,6 +40,49 @@ fab.body = function( obj ) {
   return function() {
     var out = this({ body: obj });
     if ( out ) out();
+  }
+}
+
+fab.map = function( fn ) {
+  return function( app ) {
+    return function() {
+      var out = this;
+      return app.call( function listener( obj ) {
+        if ( obj ) arguments[ 0 ] = fn.call( obj, obj );      
+        out = out.apply( this, arguments );
+        
+        return listener;
+      })
+    }
+  }
+}
+
+fab.tap = function( fn ) {
+  return function( app ) {
+    return function() {
+      fn();
+      return app.call( this );    
+    }
+  }
+}
+
+fab.delay = function( time ) {
+  return function( app ) {
+    return function() {
+      var out = this;
+      setTimeout( function() { app.call( out ) }, time );    
+    }  
+  }
+}
+
+fab.echo = function() {
+  var out = this;
+  return function listener( obj ) {
+    if ( obj && !( "body" in obj ) ) arguments[ 0 ] = { body: obj };
+
+    out = out.apply( this, arguments );
+    
+    return listener;
   }
 }
 
@@ -136,60 +175,44 @@ fab.status = function( code ) {
   }
 }
 
-fab.serialize = function( app ) {
-  return function() {
-    var out = this;
+fab.stringify = fab.map( function( obj ) {
+  var body = obj.body;
+  if ( typeof body != "string" ) obj.body = JSON.stringify( body );
+  return obj;
+})
 
-    return app.call( function listener( obj ) {
-      if ( obj && obj.body && typeof obj.body != "string" ) {
-        obj.body = JSON.stringify( obj.body );
-      }
-      
-      out = out.apply( this, arguments );
-      
-      return listener;
-    })
+fab.contentLength = fab.map( function( obj ) {
+  if ( typeof obj.body == "string" ) {
+    ( obj.headers = obj.headers || {} )
+      [ "content-length" ] = process._byteLength( obj.body );
   }
-}
-
-fab.contentLength = function( app ) {
-  return function() {
-    var out = this;
-    
-    return app.call( function listener( obj ) {
-      if ( obj && typeof obj.body == "string" ) {
-        ( obj.headers = obj.headers || {} )
-          [ "content-length" ] = process._byteLength( obj.body );
-      }
-      
-      out = out.apply( this, arguments );
-      
-      return listener;
-    })
-  }
-}
+  
+  return obj;
+})
 
 fab.fs = function( root ) {
-  root = root || process.cwd();
+  root.call( function( obj ) {
+    root = obj.body || process.cwd();
+  });
 
   var
     fs = require( "fs" ),
-    path = require( "path" );
+    join = require( "path" ).join;
 
   return function() {
     var out = this;
-
     return function( head ) {
-      if ( head.method != "GET" ) out({ status: 405 })();
+      var path = join( root, head.url.pathname );
       
-      var pathname = path.join( root, head.url.pathname ); 
-      
-      fs.readFile( pathname, "utf8", function( err, data ) {
-        out( err ? { status: 404 } : { body: data } )();
-      })
+      fs.readFile( path, "utf8", function( err, data ) {
+        out({
+          body: data || "File not found.",
+          status: err ? 404 : 200
+        })();
+      });    
     }
   }
-}
+};
 
 fab.http = function( loc ) {
   loc = require( "url" ).parse( loc )
@@ -276,7 +299,7 @@ fab.nodejs = function( app ) {
             response.writeHead( status, headers || {} );
             headers = false;
           }
-
+          
           response.write( obj.body, _encoding );
         }
 
@@ -289,16 +312,18 @@ fab.nodejs = function( app ) {
           headers = false;
         }
         
-        response.close();
+        response.end();
       }
     }
   }
 }
 
 fab.tmpl = function( source ) {
+  var fn;
+
   source.call( function( obj ) {
-    source = new Function( "p",
-      "p.push('" +
+    fn = new Function(
+      "var p=[];p.push('" +
       obj.body
         .replace( /[\r\t\n]/g, " " )
         .replace( /'(?=[^%]*%>)/g, "\t" )
@@ -311,19 +336,13 @@ fab.tmpl = function( source ) {
   });
   
   return function( app ) {
-    return function() {
-      var out = this;
+    // TODO: fn might not be defined yet for async
+    app = fab.map( function( obj ) {
+      obj.body = fn.call( obj.body );
+      return obj;
+    })( app );
 
-      return app.call( function listener( obj ) {
-        if ( obj && obj.body ) {
-          obj.body = source.call( obj.body, [] );
-        }
-
-        out = out.apply( this, arguments );
-        
-        return listener;
-      });
-    }
+    return function() { return app.call( this ) };
   }
 };
 
@@ -332,3 +351,5 @@ fab.self = function( obj ){ return obj };
 fab.Function = fab.self;
 fab.RegExp = fab.path;
 fab.Number = fab.status;
+
+module.exports = fab;
