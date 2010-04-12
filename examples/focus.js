@@ -1,4 +1,4 @@
-fab = require( "fab" );
+fab = require( "../" );
 
 var listeners = [];
 
