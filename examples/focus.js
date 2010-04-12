@@ -66,5 +66,7 @@ function userAgent() {
 
 function client() {
   ( function listen(){ $.getScript( "/listen", listen ) })();
-  $( window ).focus( function(){ $.getScript( "/focused" ) } );
+  $( window )
+    .focus( function(){ $.getScript( "/focused" ) } )
+    .focus();
 }
