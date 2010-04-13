@@ -1,13 +1,9 @@
-fab = require( "../" );
-
-var listeners = [];
-
-require( "http" ).createServer(
-
-  fab
-
-  ( fab.nodejs )
+var
+  fab = require( "../" ),
+  listeners = [];
   
+module.exports = fab
+
   ( /\/listen/ )
     ( function(){ listeners.push( this ) } )
     
@@ -17,17 +13,15 @@ require( "http" ).createServer(
     
   ( /\/focused/ )
     ( broadcast, listeners )
-    ( fab.tmpl, "document.body.innerHTML = '<%= this %>';" )
+    ( fab.tmpl, "$('body').html('<%= this %>');" )
     ( userAgent )
   
   ( fab.tmpl, "<html><body style='font: bold 5em helvetica'><%= this %></body></html>" )
-
+  
   (
     "<script src='http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js'></script>" +
-    "<script src='/init'></script>"
-  )
-
-).listen( 0xFAB );
+    "<script src='/browserFocus/init'></script>"
+  );
 
 function broadcast( listeners ) {
   listeners.call( function( obj ){ listeners = obj.body } );
@@ -65,8 +59,8 @@ function userAgent() {
 }
 
 function client() {
-  ( function listen(){ $.getScript( "/listen", listen ) })();
+  ( function listen(){ $.getScript( "/browserFocus/listen", listen ) })();
   $( window )
-    .focus( function(){ $.getScript( "/focused" ) } )
+    .focus( function(){ $.getScript( "/browserFocus/focused" ) } )
     .focus();
 }

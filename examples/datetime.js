@@ -1,22 +1,18 @@
-fab = require( "../" );
+fab = require( "../" )
 
-require( "http" ).createServer(
+with ( fab ) { module.exports = fab
 
-  fab
-
-  ( fab.nodejs )
-  
-  ( fab.contentLength )
-  ( fab.stringify )
+  ( contentLength )
+  ( stringify )
   
   ( /\/date/ )
-    ( fab.tmpl, "The date is <%= this.toDateString() %>." )
+    ( tmpl, "The date is <%= this.toDateString() %>." )
     ()
 
   ( /\/time/ )
-    ( fab.tmpl, "The time is <%= this.toTimeString() %>." )
+    ( tmpl, "The time is <%= this.toTimeString() %>." )
     ()
   
-  ( new Date )
-
-).listen( 0xFAB );
+  ( new Date );
+  
+}

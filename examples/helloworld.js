@@ -1,11 +1,7 @@
 fab = require( "../" );
 
-require( "http" ).createServer(
+module.exports = fab
 
-  fab
-
-  ( fab.nodejs )
-  
   ( /\/hello/ )
   
     ( fab.tmpl, "Hello, <%= this[ 0 ] %>!" )
@@ -14,9 +10,7 @@ require( "http" ).createServer(
       ( capture )
       ( [ "world" ] )
   
-  ( 404 )
-
-).listen( 0xFAB );
+  ( 404 );
 
 function capture() {
   var out = this;
