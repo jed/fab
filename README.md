@@ -3,26 +3,18 @@
 
     fab = require( "../" );
     
-    require( "http" ).createServer(
+    require( "http" ).createServer( fab
     
-      fab
-    
-      ( fab.nodejs )
+      ( /^\/hello/ )
       
-      ( /\/hello/ )
-      
-        ( fab.tmpl, "Hello, <%= this %>!" )
+        ( fab.tmpl, "Hello, <%= this[ 0 ] %>!" )
     
-        ( /\/(\w+)/ )
-          ( function() {
-            var out = this;
-            return function( head ) {
-              out({ body: head.url.capture[ 0 ] })();
-            }
-          })
-          
-        ( "world" )
+        ( /^\/(\w+)$/ )
+          ( fab.capture )
+          ( [ "world" ] )
       
       ( 404 )
     
     ).listen( 0xFAB );
+    
+    
