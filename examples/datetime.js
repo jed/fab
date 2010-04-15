@@ -1,18 +1,18 @@
 fab = require( "../" )
 
-with ( fab ) { module.exports = fab
+module.exports = fab
 
-  ( contentLength )
-  ( stringify )
+  ( fab.contentLength )
+  ( fab.stringify )
   
   ( /\/date/ )
-    ( tmpl, "The date is <%= this.toDateString() %>." )
+    ( fab.tmpl )
+      ( "The date is <%= this.toDateString() %>." )
     ()
 
   ( /\/time/ )
-    ( tmpl, "The time is <%= this.toTimeString() %>." )
+    ( fab.tmpl )
+      ( "The time is <%= this.toTimeString() %>." )
     ()
   
   ( new Date );
-  
-}
