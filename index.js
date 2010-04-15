@@ -107,25 +107,27 @@ module.exports = ( function source() {
   fab.path = function( pattern ) {
     var match = {
       String: function( url ) {
-        var path = url.pathname;
-  
-        if ( path.indexOf( pattern ) ) return;
-  
-        url.pathname = path.substr( pattern.length );
-        return url;
+        if ( path.indexOf( pattern ) ) return false;
+
+        url.pathname = url.pathname.substr( pattern.length );
+        return true;
       },
       
       RegExp: function( url ) {
-        var path = url.pathname, matched;
-  
-        if ( path.search( pattern ) ) return;
+        var match = false;
+
+        url.pathname = url.pathname.replace( pattern, function() {
+          match = true;
+
+          var capture = [].slice.call( arguments, 1, -2 );
+          
+          if ( !url.capture ) url.capture = capture;
+          else [].push.apply( url.capture, capture );
+
+          return "";
+        });
         
-        matched = path.match( pattern );
-        
-        url.pathname = path.substr( matched.shift().length );
-        url.capture = url.capture || [];
-        url.capture.push.apply( url.capture, matched );
-        return url;
+        return match;
       }
     }[ pattern.constructor.name ];
     
@@ -134,15 +136,8 @@ module.exports = ( function source() {
         return function() {
           var out = this;
           return function( head ) {
-            var
-              app = miss,
-              url = match( head.url );
-            
-            if ( url ) {
-              head.url = url;
-              app = hit;
-            }
-            
+            var app = match( head.url ) ? hit : miss;
+
             app = app.call( out );
             if ( app ) app = app( head );
             
