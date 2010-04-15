@@ -105,31 +105,33 @@ module.exports = ( function source() {
   })( [ "GET", "POST", "PUT", "DELETE" ] )
   
   fab.path = function( pattern ) {
-    var match = {
-      String: function( url ) {
-        if ( path.indexOf( pattern ) ) return false;
-
-        url.pathname = url.pathname.substr( pattern.length );
-        return true;
-      },
-      
-      RegExp: function( url ) {
-        var match = false;
-
-        url.pathname = url.pathname.replace( pattern, function() {
-          match = true;
-
-          var capture = [].slice.call( arguments, 1, -2 );
-          
-          if ( !url.capture ) url.capture = capture;
-          else [].push.apply( url.capture, capture );
-
-          return "";
-        });
+    var
+      proto = Array.prototype,
+      match = {
+        String: function( url ) {
+          if ( path.indexOf( pattern ) ) return false;
+  
+          url.pathname = url.pathname.substr( pattern.length );
+          return true;
+        },
         
-        return match;
-      }
-    }[ pattern.constructor.name ];
+        RegExp: function( url ) {
+          var match = false;
+  
+          url.pathname = url.pathname.replace( pattern, function() {
+            match = true;
+  
+            var capture = proto.slice.call( arguments, 1, -2 );
+            
+            if ( !url.capture ) url.capture = capture;
+            else proto.push.apply( url.capture, capture );
+  
+            return "";
+          });
+          
+          return match;
+        }
+      }[ pattern.constructor.name ];
     
     return function( hit ) {
       return function( miss ) {
