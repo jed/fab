@@ -151,7 +151,7 @@ module.exports = ( function source() {
   }
   
   fab.capture = fab.map( function( obj ) {
-    return { body: obj.url && obj.url.capture || [] }
+    return { body: obj.url ? obj.url.capture : [] };
   })( fab.echo )
   
   fab.status = function( code ) {
