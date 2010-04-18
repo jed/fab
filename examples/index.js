@@ -4,9 +4,9 @@ require( "http" ).createServer( fab
   
   ( fab.nodejs )
 
-  ( /^\/browserFocus/, require( "./browserFocus" ) )
-  ( /^\/helloWorld/, require( "./helloWorld" ) )
-  ( /^\/dateTime/, require( "./dateTime" ) )
+  ( /^\/focus/, require( "./focus" ) )
+  ( /^\/hello/, require( "./hello" ) )
+  ( /^\/date/, require( "./date" ) )
   
   ( 404 )
     

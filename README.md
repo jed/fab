@@ -1,6 +1,10 @@
 (fab) - a modular async web framework
 =====================================
 
+(fab) is a lightweight toolkit that makes it easy to build asynchronous web apps. It takes advantage of the flexibility and functional nature of javascript to create a concise "DSL", without pre-compilation or magic scope hackery.
+
+Here's an example of a Hello World app:
+
     fab = require( "../" );
     
     require( "http" ).createServer( fab
