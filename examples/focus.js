@@ -20,7 +20,7 @@ module.exports = fab
   
   (
     "<script src='http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js'></script>" +
-    "<script src='/browserFocus/init'></script>"
+    "<script src='/focus/init'></script>"
   );
 
 function broadcast( listeners ) {
@@ -59,8 +59,8 @@ function userAgent() {
 }
 
 function client() {
-  ( function listen(){ $.getScript( "/browserFocus/listen", listen ) })();
+  ( function listen(){ $.getScript( "/focus/listen", listen ) })();
   $( window )
-    .focus( function(){ $.getScript( "/browserFocus/focused" ) } )
+    .focus( function(){ $.getScript( "/focus/focused" ) } )
     .focus();
 }
