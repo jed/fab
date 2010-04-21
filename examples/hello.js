@@ -28,11 +28,17 @@ module.exports = fab
 
     ( /4/ ) // asynchronous
       ( function() {
-        var out = this({ body: "Hello, " });
-        
-        setTimeout( function() {
-          out({ body: "world!" })();
-        }, 2000 );
+        var
+          out = this,
+          res = "Hello, world!".split(""),
+          interval = setInterval( function() {
+            out = out({ body: res.shift() });
+
+            if ( !res.length ) {
+              if ( out ) out();
+              clearInterval( interval );
+            }
+          }, 500 );
       })
       
     ( /5/ ) // request-specific
