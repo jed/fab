@@ -311,7 +311,7 @@ module.exports = ( function source() {
             head.headers
           )
           .addListener( "response", function( response ) {
-            back({
+            out({
               status: response.statusCode,
               headers: response.headers
             });
