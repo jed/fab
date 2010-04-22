@@ -4,10 +4,10 @@ require( "http" ).createServer( fab
   
   ( fab.nodejs )
 
-  ( /^\/focus/, require( "./focus" ) )
   ( /^\/hello/, require( "./hello" ) )
+  ( /^\/focus/, require( "./focus" ) )
   ( /^\/date/, require( "./date" ) )
-  
+
   ( 404 )
     
 ).listen( 0xFAB );
