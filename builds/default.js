@@ -1,3 +1,5 @@
+var tests = [];
+
 [ "fab"
   , "fab.tmpl"
   , "fab.body"
@@ -28,6 +30,10 @@
     { parent = parent[ parts.shift() ] }
     
   parent[ parts.shift() ] = app.app;
+  if ( app.test ) tests.push( app.test );
 });
 
 exports.app = exports.fab;
+exports.test = function() {
+  tests.forEach( function( test ) { test() });
+};
