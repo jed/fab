@@ -8,8 +8,7 @@ function body( obj ) {
 exports.summary = "Turns an object into an app that responds with it.";
 
 exports.tests = ( function() {
-  var assert = require( "assert" )
-    , response = "hello"
+  var response = "hello"
     , app = body( response )
     , fn = function(){};
 
