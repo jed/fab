@@ -31,7 +31,7 @@ exports.app = function( loc ) {
             .addListener( "end", out )
             .setBodyEncoding( "utf8" );
         })
-        .close();
+        .end();
     }
   }
 }
