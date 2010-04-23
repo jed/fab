@@ -12,10 +12,10 @@ exports.app = function( pattern ) {
       },
       
       RegExp: function( url ) {
-        var match = false;
+        var matched = false;
 
         url.pathname = url.pathname.replace( pattern, function() {
-          match = true;
+          matched = true;
 
           var capture = proto.slice.call( arguments, 1, -2 );
           
@@ -25,7 +25,7 @@ exports.app = function( pattern ) {
           return "";
         });
         
-        return match;
+        return matched;
       }
     }[ pattern.constructor.name ];
   
