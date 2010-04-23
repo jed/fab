@@ -2,7 +2,7 @@ var name
   , app
   , fab
     = module.exports
-    = require( "./builds/default" ).app;
+    = require( "./builds/all" ).app;
 
 for ( name in fab ) {
   app = fab[ name ];

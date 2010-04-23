@@ -7,20 +7,34 @@ function body( obj ) {
 
 exports.summary = "Turns an object into an app that responds with it.";
 
-exports.test = function() {
+exports.tests = ( function() {
   var assert = require( "assert" )
     , response = "hello"
     , app = body( response )
     , fn = function(){};
+
+  return [
+
+    function
+    bodyReturnsUnaryApp() {
+      this( app.length === 0 )
+    },
+    
+    function
+    bodyRespondsWithCorrectPayload() {
+      var out = this;
+      app.call( function( obj ){ out( obj.body === response ) } );
+    },
   
-  assert.equal( app.length, 0, "fab.body app is unary." )
-  
-  app.call( function( obj ) {
-    assert.equal( obj.body, response, "body sends correct payload." )
-    return function() {
-      assert.equal( arguments.length, 0, "fab.body closes connection after payload." )
+    function
+    bodyClosesConnection() {
+      var out = this;
+      app.call( function() {
+        return function(){ out( !arguments.length ) }
+      })
     }
-  })
-}
+  ];
+  
+})();
 
 exports.app = body;
