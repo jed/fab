@@ -1,6 +1,6 @@
 exports.summary = "Turns a function into a binary app that maps responses from the upstream app.";
 
-exports.app = function( fn ) {
+map = exports.app = function( fn ) {
   return function( app ) {
     return function() {
       var out = this;
@@ -13,3 +13,27 @@ exports.app = function( fn ) {
     }
   }
 }
+
+exports.tests = ( function() {
+  var fn = function( obj ) { return { body: JSON.stringify( obj ).length } }
+    , upstream = function(){ this({ body: { a: new Date } }) }
+    , binary = map( fn )
+    , unary = binary( upstream );
+
+  return [
+
+    function
+    mapReturnsNaryApp() {
+      this( binary.length !== 0 )
+    },
+    
+    function
+    mapRespondsWithCorrectPayload() {
+      var out = this;
+      unary.call( function( obj ) {
+        out( obj.body === JSON.stringify({ body: { a: new Date }}).length ) }
+      );
+    }
+  ];
+  
+})();
