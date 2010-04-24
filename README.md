@@ -5,20 +5,18 @@
 
 Here's an example of a "hello world" app:
 
-    fab = require( "../" );
+    with ( fab = require( "fab" ) ) fab
     
-    require( "http" ).createServer( fab
+    ( listen( 0xFAB ) )
     
-      ( /^\/hello/ )
-      
-        ( fab.tmpl, "Hello, <%= this[ 0 ] %>!" )
+    ( /^\/hello/ )
     
-        ( /^\/(\w+)$/ )
-          ( fab.capture )
-          ( [ "world" ] )
-      
-      ( 404 )
+      ( tmpl, "Hello, <%= this[ 0 ] %>!" )
+  
+      ( /^\/(\w+)$/ )
+        ( capture )
+        ( [ "world" ] )
     
-    ).listen( 0xFAB );
+    ( 404 );
     
 See [more examples](http://github.com/jed/fab/tree/master/examples/), learn how to [make your own apps](http://wiki.github.com/jed/fab/fab-app-specification), or see the [apps that (fab) provides for you](http://wiki.github.com/jed/fab/built-in-fab-apps).
