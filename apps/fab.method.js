@@ -1,6 +1,6 @@
 exports.summary = "Takes one more more method names, and returns a ternary app that passes the request to the first app when the request method matches, and to the second app otherwise.";
 
-exports.app = ( function( names ) {
+method = exports.app = ( function( names ) {
   for ( var name; name = names.pop(); ) method[ name ] = method( name );
     
   return method;
@@ -30,4 +30,27 @@ exports.app = ( function( names ) {
       }
     }
   }
-})( [ "GET", "POST", "PUT", "DELETE" ] )
+})( [ "GET", "POST", "PUT", "DELETE" ] );
+
+exports.tests = ( function() {
+  var ok = function(){ this({ body: true }) }
+    , notok = function(){ this({ body: false }) }
+    , app = method( "GET" )( ok )( notok );
+
+  return [
+
+    function
+    methodMatchesGetCorrectly() {
+      var out = this;
+      app.call( function( obj ){ out( obj.body ) } )({ method: "GET" });
+    },
+
+    function
+    methodMismatchesPostCorrectly() {
+      var out = this;
+      app.call( function( obj ){ out( !obj.body ) } )({ method: "POST" });
+    }
+  
+  ];
+  
+})();
