@@ -1,9 +1,11 @@
-( fab = require( "../" ) )
+with ( require( "../" ) )
+
+( fab )
   
-( fab.listen( 0xFAB ) )
-
-( /^\/hello/, require( "./hello" ) )
-( /^\/focus/, require( "./focus" ) )
-( /^\/date/, require( "./date" ) )
-
-( 404 );
+  ( listen( 0xFAB ) )
+  
+  ( /^\/hello/, require( "./hello" ) )
+  ( /^\/focus/, require( "./focus" ) )
+  ( /^\/date/, require( "./date" ) )
+  
+  ( 404 );

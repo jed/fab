@@ -10,3 +10,5 @@ for ( name in fab ) {
   for ( name in app )
     { fab[ name ] = app[ name ] };
 }
+
+fab.fab = fab;
