@@ -5,13 +5,15 @@
 
 Here's an example of a "hello world" app:
 
-    with ( fab = require( "fab" ) ) fab
+    fab = require( "fab" );
+    with ( fab ) fab
     
     ( listen( 0xFAB ) )
     
     ( /^\/hello/ )
     
-      ( tmpl, "Hello, <%= this[ 0 ] %>!" )
+      ( tmpl )
+        ( "Hello, <%= this[ 0 ] %>!" )
   
       ( /^\/(\w+)$/ )
         ( capture )
