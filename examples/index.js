@@ -1,13 +1,9 @@
-fab = require( "../" );
-
-require( "http" ).createServer( fab
+( fab = require( "../" ) )
   
-  ( fab.nodejs )
+( fab.listen( 0xFAB ) )
 
-  ( /^\/hello/, require( "./hello" ) )
-  ( /^\/focus/, require( "./focus" ) )
-  ( /^\/date/, require( "./date" ) )
+( /^\/hello/, require( "./hello" ) )
+( /^\/focus/, require( "./focus" ) )
+( /^\/date/, require( "./date" ) )
 
-  ( 404 )
-    
-).listen( 0xFAB );
+( 404 );
