@@ -1,0 +1,30 @@
+{
+  name: "(fab)",
+  description: "A modular async web framework for node.js",
+  maintainers: [
+    {
+      name: "Jed Schmidt",
+      web: "http://github.com/jed"
+    }
+  ],
+  bugs: {
+    web: "http://github.com/jed/fab/issues"
+  },
+  licences: [
+    {
+      type: "MIT",
+      url: "http://github.com/jed/fab/blob/master/LICENSE.txt"
+    }
+  ],
+  repositories: [
+    {
+      type: "git",
+      url: "http://github.com/jed/fab"
+    }
+  ],
+  engine: "node",
+  builtin: false,
+  directories: [ "apps", "builds", "examples", "utils" ],
+  version: "0.4.0",
+  keywords: [ "node", "http", "framework" ]
+}
