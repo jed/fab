@@ -18,14 +18,14 @@ exports.app = function( app ) {
           obj.headers || { host: loc.hostname }
         )
         .addListener( "response", function( response ) {
-          out({
+          out = out({
             status: response.statusCode,
             headers: response.headers
           });
         
           response
             .addListener( "data", function( chunk ) {
-              out({ body: chunk });
+              if ( out ) out = out({ body: chunk });
             })
             .addListener( "end", out )
             .setBodyEncoding( "utf8" );
