@@ -9,7 +9,7 @@ Here's an example of a "hello world" app:
     
     ( fab )
     
-      ( listen( 0xFAB ) )
+      ( listen, 0xFAB )
       
       ( /^\/hello/ )
       

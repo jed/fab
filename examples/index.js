@@ -4,7 +4,7 @@ var hello = require( "./hello" )
 
 with ( require( "../" ) ) fab
   
-  ( listen( 0xFAB ) )
+  ( listen, 0xFAB )
   
   ( /^\/hello/, hello )
   ( /^\/focus/, focus )
