@@ -1,5 +1,4 @@
-module.exports = require( "../utils/build" )([
-
+var apps = exports.apps = [
   "fab"
   , "fab.body"
   , "fab.Function"
@@ -8,5 +7,6 @@ module.exports = require( "../utils/build" )([
   , "fab.path"
   , "fab.RegExp"
   , "fab.status"
+];
 
-]);
+exports.app = require( "../utils/build" )( apps ).app;
