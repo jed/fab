@@ -1,22 +1,21 @@
-exports.summary = "A unary app that takes a location and fetches it over http.";
+exports.summary = "A binary app that proxies a request to a remote http server. The request information is provided entirely by the upstream app, either in the form of an object with method, headers, and url properties, or as a body property containing the url to proxy.";
 
-exports.app = function( loc ) {
-  loc = require( "url" ).parse( loc )
-
-  var client = require( "http" )
-    .createClient( loc.port || 80, loc.hostname );
+exports.app = function( app ) {
+  var url = require( "url" )
+    , http = require( "http" );
 
   return function() {
     var out = this;
 
-    return function( head ) {
-      head.headers.host = loc.hostname;
-      
-      client
+    app.call( function( obj ) {
+      var loc = obj.url || url.parse( obj.body );
+
+      http
+        .createClient( loc.port || 80, loc.hostname )
         .request(
-          head.method,
-          loc.pathname + head.url.pathname + ( head.url.search || "" ),
-          head.headers
+          obj.method || "GET",
+          loc.pathname + ( loc.search || "" ),
+          obj.headers || { host: loc.hostname }
         )
         .addListener( "response", function( response ) {
           out({
@@ -31,7 +30,7 @@ exports.app = function( loc ) {
             .addListener( "end", out )
             .setBodyEncoding( "utf8" );
         })
-        .end();
-    }
+        .end();    
+    });
   }
 }
