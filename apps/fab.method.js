@@ -1,9 +1,8 @@
 exports.summary = "Takes one more more method names, and returns a ternary app that passes the request to the first app when the request method matches, and to the second app otherwise.";
 
 method = exports.app = function( names ) {
-  var
-    methods = {},
-    len = arguments.length;
+  var methods = {}
+    , len = arguments.length;
   
   for ( var i = 0; i < len; i++ ) {
     methods[ arguments[ i ] ] = true;
