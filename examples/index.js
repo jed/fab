@@ -1,11 +1,13 @@
-with ( require( "../" ) )
+var hello = require( "./hello" )
+  , focus = require( "./focus" )
+  , date = require( "./date" );
 
-( fab )
+with ( require( "../" ) ) fab
   
   ( listen( 0xFAB ) )
   
-  ( /^\/hello/, require( "./hello" ) )
-  ( /^\/focus/, require( "./focus" ) )
-  ( /^\/date/, require( "./date" ) )
+  ( /^\/hello/, hello )
+  ( /^\/focus/, focus )
+  ( /^\/date/, date )
   
   ( 404 );

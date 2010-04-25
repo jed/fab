@@ -29,8 +29,8 @@ exports.app = function( app ) {
     }
 
     function listener( obj ) {
-      if ( arguments.length ) {
-
+      if ( obj ) {
+      
         if ( "status" in obj ) {
           status = obj.status;
         }
