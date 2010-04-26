@@ -6,15 +6,15 @@ exports.app = function fab() {
   return collect.apply( this, arguments );
 
   function collect( fn ) {
-    var
-      args = stack.slice.call( arguments ),
-      length = args.length;
+    var args = stack.slice.call( arguments )
+      , length = args.length
+      , defaults = fab.defaults;
     
     if ( !length ) fn = fab.identity;
 
     if ( length > 1 ) fn = fab( fn ).apply( this, args.slice( 1 ) );
     
-    fn = ( fn && fab[ fn.constructor.name ] || fab.body )( fn );
+    fn = ( fn && defaults[ fn.constructor.name ] || defaults )( fn );
     
     stack.unshift( fn );
     

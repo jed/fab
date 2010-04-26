@@ -1,0 +1,1 @@
+exports.app = require( "./fab.body" ).app
