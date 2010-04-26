@@ -1,4 +1,6 @@
-exports.summary = "Glues apps of various arities together.";
+exports.name      = "fab";
+exports.summary   = "Glues apps of various arities together.";
+exports.requires  = [ "fab.defaults.*, fab.identity" ];
 
 exports.app = function fab() {
   var stack = [];

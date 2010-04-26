@@ -1,4 +1,6 @@
-exports.summary = "A ternary app that starts a server listening on the port number from the first app, and mounts the second app on it.";
+exports.name      = "fab.nodejs.listen";
+exports.summary   = "Starts a server listening on the port number from the first app, and mounts the second app on it.";
+exports.requires  = [ "fab.nodejs" ];
 
 var fab = { nodejs: require( "./fab.nodejs" ).app };
 

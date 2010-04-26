@@ -1,4 +1,7 @@
-exports.summary = "Takes one more more method names, and returns a ternary app that passes the request to the first app when the request method matches, and to the second app otherwise.";
+exports.name      = "fab.method";
+exports.summary   = "Passes the request to the first app when the request method matches, and to the second app otherwise.";
+exports.requires  = [];
+
 
 method = exports.app = function( names ) {
   var methods = {}

@@ -1,4 +1,6 @@
-exports.summary = "A ternary app that prepends responses with the given string.";
+exports.name      = "fab.prepend";
+exports.summary   = "Prepends responses with the given string.";
+exports.requires  = [ "fab.map" ];
 
 var fab = { map: require( "./fab.map" ).app };
 

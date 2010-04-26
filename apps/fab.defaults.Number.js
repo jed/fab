@@ -1,3 +1,7 @@
+exports.name      = "fab.defaults.Number";
+exports.summary   = "Calls fab.status for valid HTTP status codes, or fab.body otherwise.";
+exports.requires  = [ "fab.status", "fab.body" ];
+
 var fab = {
   status: require( "./fab.status" ).app,
   body: require( "./fab.body" ).app

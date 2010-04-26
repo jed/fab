@@ -1,5 +1,7 @@
-var fab = { method: require( "./fab.method" ).app };
+exports.name      = "fab.method.DELETE";
+exports.summary   = "Shortcut for fab.method( 'DELETE' ).";
+exports.requires  = [ "fab.method" ];
 
-exports.summary = "Shortcut for fab.method( 'DELETE' ).";
+var fab = { method: require( "./fab.method" ).app };
 
 exports.app = fab.method( "DELETE" )

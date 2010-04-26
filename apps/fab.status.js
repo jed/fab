@@ -1,4 +1,6 @@
-exports.summary = "Turns number into an app that responds with it as the status code.";
+exports.name      = "fab.status";
+exports.summary   = "Responds with with the given status code.";
+exports.requires  = [];
 
 function status( code ) {
   code = +code;

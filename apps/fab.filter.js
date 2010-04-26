@@ -1,4 +1,6 @@
-exports.summary = "Turns a function into a binary app that only sends responses that satisfy the function.";
+exports.name      = "fab.filter";
+exports.summary   = "Sends only responses that satisfy the function.";
+exports.requires  = [];
 
 exports.app = function( fn ) {
   return function( app ) {

@@ -1,6 +1,9 @@
+exports.name      = "fab.tmpl";
+exports.summary   = "Compiles the string response of the first app into a template function that maps subsequent responses from the second app.";
+exports.requires  = [ "fab.map" ];
+
 var fab = { map: require( "./fab.map" ).app };
 
-exports.summary = "A ternary app that compiles the string response of the first app into a template function that maps subsequent responses from the second app.";
 
 exports.app = function( source ) {
   var fn;

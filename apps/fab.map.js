@@ -1,4 +1,6 @@
-exports.summary = "Turns a function into a binary app that maps responses from the upstream app.";
+exports.name      = "fab.map";
+exports.summary   = "Maps responses from the upstream app.";
+exports.requires  = [];
 
 map = exports.app = function( fn ) {
   return function( app ) {

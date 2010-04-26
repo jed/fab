@@ -1,6 +1,8 @@
-var fab = { map: require( "./fab.map" ).app };
+exports.name      = "fab.nodejs.contentLength";
+exports.summary   = "Adds a Content-Length header based on the length of the response body.";
+exports.requires  = [ "fab.nodejs" ];
 
-exports.summary = "A binary app that adds a Content-Length header based on the length of the response body.";
+var fab = { map: require( "./fab.map" ).app };
 
 exports.app = fab.map( function( obj ) {
   if ( typeof obj.body == "string" ) {

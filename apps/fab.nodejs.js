@@ -1,4 +1,6 @@
-exports.summary = "A binary app that converts the upstream app into a node.js-compatible listener.";
+exports.name      = "fab.nodejs";
+exports.summary   = "Converts the upstream app into a node.js-compatible listener.";
+exports.requires  = [];
 
 exports.app = function( app ) {
   var url = require( "url" );

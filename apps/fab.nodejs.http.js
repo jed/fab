@@ -1,4 +1,8 @@
-exports.summary = "A binary app that proxies a request to a remote http server. The request information is provided entirely by the upstream app, either in the form of an object with method, headers, and url properties, or as a body property containing the url to proxy.";
+exports.name      = "fab.nodejs.http";
+exports.summary   = "Proxies a request to a remote http server. The request information is provided entirely by the upstream app, either in the form of an object with method, headers, and url properties, or as a body property containing the url to proxy.";
+exports.requires  = [ "fab.nodejs" ];
+
+
 
 exports.app = function( app ) {
   var url = require( "url" )

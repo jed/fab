@@ -1,4 +1,6 @@
-exports.summary = "A binary app that just returns the upstream app.";
+exports.name      = "fab.identity";
+exports.summary   = "Returns the apstream app.";
+exports.requires  = [];
 
 function identity( app ) {
   return app;

@@ -1,3 +1,8 @@
+exports.name      = "fab.body";
+exports.summary   = "Turns an object into a unary app with the object as its response.";
+exports.requires  = [];
+exports.app = body;
+
 function body( obj ) {
   return function() {
     var out = this({ body: obj });
@@ -5,12 +10,9 @@ function body( obj ) {
   }
 }
 
-exports.summary = "Turns an object into an app that responds with it.";
-
 exports.tests = ( function() {
   var response = "hello"
-    , app = body( response )
-    , fn = function(){};
+    , app = body( response );
 
   return [
 
@@ -35,5 +37,3 @@ exports.tests = ( function() {
   ];
   
 })();
-
-exports.app = body;

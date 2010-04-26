@@ -1,4 +1,6 @@
-exports.summary = "A unary app that responds with the captured url components.";
+exports.name      = "fab.capture";
+exports.summary   = "Responds with the captured url components.";
+exports.requires  = [];
 
 exports.app = function() {
   var out = this;

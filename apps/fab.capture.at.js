@@ -1,4 +1,6 @@
-exports.summary = "A binary app that responds with the captured url component at the given position.";
+exports.name      = "fab.capture.at";
+exports.summary   = "Responds with the captured url component at the given position.";
+exports.requires  = [ "fab.map", "fab.capture" ];
 
 var fab = {
   map: require( "./fab.map" ).app,

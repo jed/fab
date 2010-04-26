@@ -1,5 +1,7 @@
-var fab = { method: require( "./fab.method" ).app };
+exports.name      = "fab.method.PUT";
+exports.summary   = "Shortcut for fab.method( 'PUT' ).";
+exports.requires  = [ "fab.method" ];
 
-exports.summary = "Shortcut for fab.method( 'PUT' ).";
+var fab = { method: require( "./fab.method" ).app };
 
 exports.app = fab.method( "PUT" )

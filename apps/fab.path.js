@@ -1,4 +1,6 @@
-exports.summary = "Takes a string or regular expression pattern, and returns a ternary app that passes the request to the first app if the path mathes the pattern, or the second app otherwise. When the path is matches, the matching part of the existing path is truncated before the request is passed.";
+exports.name      = "fab.path";
+exports.summary   = "Passes the request to the first app if the path matches the pattern, or the second app otherwise. When the path is matched, the matching part of the existing path is truncated before the request is passed.";
+exports.requires  = [];
 
 exports.app = function( pattern ) {
   var
