@@ -3,7 +3,7 @@ exports.summary = "A ternary app that starts a server listening on the port numb
 var fab = { nodejs: require( "./fab.nodejs" ).app };
 
 exports.app = function( port ) {
-  port.call( function( obj ){ port = +obj.body } );
+  port.call( function( obj ){ port = obj.body } );
 
   return function( app ) {
     require( "http" )
