@@ -8,7 +8,7 @@ for ( name in fab ) {
   app = fab[ name ];
 
   for ( name in app )
-    { fab[ name ] = app[ name ] };
+    { fab[ name ] = fab[ name ] || app[ name ] };
 }
 
 fab.fab = fab;
