@@ -14,11 +14,11 @@ Here's an example of a "hello world" app:
       ( /^\/hello/ )
       
         ( tmpl )
-          ( "Hello, <%= this[ 0 ] %>!" )
+          ( "Hello, <%= this %>!" )
     
         ( /^\/(\w+)$/ )
-          ( capture )
-          ( [ "world" ] )
+          ( capture.at, 0 )
+          ( "world" )
       
       ( 404 );
     
