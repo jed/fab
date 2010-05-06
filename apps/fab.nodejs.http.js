@@ -11,7 +11,9 @@ exports.app = function( app ) {
   return function() {
     var out = this;
 
-    app.call( function( obj ) {
+    return app.call( function listener( obj ) {
+
+if (obj) {
       var loc = obj.url || url.parse( obj.body );
 
       http
@@ -26,7 +28,7 @@ exports.app = function( app ) {
             status: response.statusCode,
             headers: response.headers
           });
-        
+
           response
             .addListener( "data", function( chunk ) {
               if ( out ) out = out({ body: chunk });
@@ -34,7 +36,9 @@ exports.app = function( app ) {
             .addListener( "end", out )
             .setBodyEncoding( "utf8" );
         })
-        .end();    
+        .end();
+}
+      return listener;
     });
   }
 }
