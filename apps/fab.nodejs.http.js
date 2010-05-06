@@ -13,31 +13,31 @@ exports.app = function( app ) {
 
     return app.call( function listener( obj ) {
 
-if (obj) {
-      var loc = obj.url || url.parse( obj.body );
+      if (obj) {
+        var loc = obj.url || url.parse( obj.body );
 
-      http
-        .createClient( loc.port || 80, loc.hostname )
-        .request(
-          obj.method || "GET",
-          loc.pathname + ( loc.search || "" ),
-          obj.headers || { host: loc.hostname }
-        )
-        .addListener( "response", function( response ) {
-          out = out({
-            status: response.statusCode,
-            headers: response.headers
-          });
+        http
+          .createClient( loc.port || 80, loc.hostname )
+          .request(
+            obj.method || "GET",
+            loc.pathname + ( loc.search || "" ),
+            obj.headers || { host: loc.hostname }
+          )
+          .addListener( "response", function( response ) {
+            out = out({
+              status: response.statusCode,
+              headers: response.headers
+            });
 
-          response
-            .addListener( "data", function( chunk ) {
-              if ( out ) out = out({ body: chunk });
-            })
-            .addListener( "end", out )
-            .setBodyEncoding( "utf8" );
-        })
+            response
+              .addListener( "data", function( chunk ) {
+                if ( out ) out = out({ body: chunk });
+              })
+              .addListener( "end", out )
+              .setBodyEncoding( "utf8" );
+          })
         .end();
-}
+      }
       return listener;
     });
   }
