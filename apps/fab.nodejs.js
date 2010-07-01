@@ -18,7 +18,7 @@ exports.app = function( app ) {
       inbound = inbound({
         method: request.method,
         headers: request.headers,
-        url: url.parse( request.url )
+        url: url.parse( "//" + request.headers.host + request.url )
       });
     }
     
