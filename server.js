@@ -57,8 +57,8 @@ with ( fab )
 with ( html )
 
 ( fab )
-  // listen on port 4011 and let us know
-  ( listen, 0xFAB )
+  // listen and let us know
+  ( listen, +process.env.PORT || 0xFAB )
   ( log, "listening on port 4011..." )
   
   // return a simple text response
