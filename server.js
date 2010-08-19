@@ -132,7 +132,12 @@ with ( html )
         ()
 
         ( PRE )
-          ( "curl -N http://localhost:4011/5" )
+          ( "curl -N http:" )
+          ( function( write ) {
+            return write( function( write, head ) {
+              return write( head.url.href );
+            }) 
+          })
         ()
 
         ( returnLink )
