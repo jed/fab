@@ -64,13 +64,13 @@ with ( html )
   // return a simple text response
   ( route, /^\/1/ )
     ( undefined, { headers: { "Content-Type": "text/plain" } } )
-    ( "This is a simple hello world response." )
+    ( "this is a simple hello world response." )
   ()
 
   // return a "streamed" text response
   ( route, /^\/2/ )
     ( undefined, { headers: { "Content-Type": "text/plain" } } )
-    ( "This is a" )
+    ( "this is a" )
     ( " 'streamed' " )
     ( "hello world response." )
   ()
@@ -78,7 +78,7 @@ with ( html )
   // now try it with some dynamic information
   ( route, /^\/3/ )
     ( undefined, { headers: { "Content-Type": "text/plain" } } )
-    ( "Hello" )
+    ( "hello" )
   
     ( route, /^\/(\w+)$/ )
       ( ", " )( route.capture, 0 )( "!" )
@@ -100,9 +100,9 @@ with ( html )
       // show that responses can be asynchronous
       ( route, /^\/4/ )
         ( P )
-          ( "Your lucky number is " )
+          ( "your lucky number is " )
           ( rand, 100 )
-          ( ". Now try refreshing." )
+          ( ". now try refreshing." )
         ()
 
         ( returnLink )
@@ -110,7 +110,7 @@ with ( html )
 
       // show that asynchronous responses are naturally chained
       ( route, /^\/5/ )
-        ( P )( "Your lucky numbers are:" )()
+        ( P )( "your lucky numbers are:" )()
 
         ( UL )
           ( LI )( rand, 100 )()
@@ -122,12 +122,12 @@ with ( html )
         ()
 
         ( P )
-          ( "This page took three seconds to load, to show " )
+          ( "this page took three seconds to load, to show " )
           ( "that the numbers were streamed in realtime." )
         ()
         
         ( P )
-          ( "This is much more compelling when you can see it stream, " )
+          ( "this is much more compelling when you can see it stream, " )
           ( "so execute the following from the terminal:" )
         ()
 
@@ -138,6 +138,11 @@ with ( html )
               return write( head.url.href );
             }) 
           })
+        ()
+        
+        ( P )
+          ( "make sure to try this on your machine; for some reason " )
+          ( "streaming isn't working on heroku." )
         ()
 
         ( returnLink )
