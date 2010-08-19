@@ -1,0 +1,145 @@
+fab = require( "./" );
+
+// define an app that returns a random number
+// after 500 milliseconds elapse.
+function rand( write, max ) {
+  return write( function( write ) {
+    return fab.stream( function( stream ) {
+      setTimeout( function() {
+        var rand = parseInt( Math.random() * max ).toString();
+        return stream( write( rand ) )();
+      }, 500 );
+    });
+  });
+}
+
+// define a snippet to be placed at the bottom
+// of any html page, to jump back to the main page
+with ( fab )
+with ( html ) returnLink =
+
+( fab )
+  ( P, { style: "margin-top:20px;" } )
+    ( "return to the " )
+    ( A, { href: "/" } )( "front page" )()
+  ()
+();
+
+// define the main page
+with ( fab )
+with ( html ) mainPage =
+
+( fab )
+  ( H1 )( "welcome to the (fab) v0.5 preview" )()
+  
+  ( P )( "here are some sample (fab) apps:" )()
+  
+  ( UL )
+    ( LI )( A, { href: "/1" } )( "simple hello world" )()()
+    ( LI )( A, { href: "/2" } )( "streamed hello world" )()()
+    ( LI )( A, { href: "/3" } )( "anonymous salutation" )()()
+    ( LI )( A, { href: "/3/you" } )( "named salutation" )()()
+    ( LI )( A, { href: "/4" } )( "delayed async response" )()()
+    ( LI )( A, { href: "/5" } )( "delayed async responses" )()()
+    ( LI )( A, { href: "/" } )( "this main page" )()()
+  ()
+  
+  ( P )
+    ( "i'd love to hear your feedback, on either " )
+    ( A, { href: "http://github.com/jed/fab/issues" } )( "github" )()
+    ( " or " )
+    ( A, { href: "http://twitter.com/fabjs" } )( "twitter" )()
+    ( ". thanks! " )
+  ()
+()
+
+with ( fab )
+with ( html )
+
+( fab )
+  // listen on port 4011 and let us know
+  ( listen, 0xFAB )
+  ( log, "listening on port 4011..." )
+  
+  // return a simple text response
+  ( route, /^\/1/ )
+    ( undefined, { headers: { "Content-Type": "text/plain" } } )
+    ( "This is a simple hello world response." )
+  ()
+
+  // return a "streamed" text response
+  ( route, /^\/2/ )
+    ( undefined, { headers: { "Content-Type": "text/plain" } } )
+    ( "This is a" )
+    ( " 'streamed' " )
+    ( "hello world response." )
+  ()
+  
+  // now try it with some dynamic information
+  ( route, /^\/3/ )
+    ( undefined, { headers: { "Content-Type": "text/plain" } } )
+    ( "Hello" )
+  
+    ( route, /^\/(\w+)$/ )
+      ( ", " )( route.capture, 0 )( "!" )
+    ()
+    
+    ( " (now try adding a name to the url, such as /3/name)" )
+  ()
+  
+  // use fab.html templating for the rest of the apps
+  ( undefined, { headers: { "Content-Type": "text/html" } } )  
+
+  ( HTML )
+    ( HEAD )
+      ( TITLE )( "welcome to the (fab) v0.5 preview" )()
+      ( STYLE )( "body { font-family:sans-serif }" )()
+    ()
+
+    ( BODY )
+      // show that responses can be asynchronous
+      ( route, /^\/4/ )
+        ( P )
+          ( "Your lucky number is " )
+          ( rand, 100 )
+          ( ". Now try refreshing." )
+        ()
+
+        ( returnLink )
+      ()
+
+      // show that asynchronous responses are naturally chained
+      ( route, /^\/5/ )
+        ( P )( "Your lucky numbers are:" )()
+
+        ( UL )
+          ( LI )( rand, 100 )()
+          ( LI )( rand, 100 )()
+          ( LI )( rand, 100 )()
+          ( LI )( rand, 100 )()
+          ( LI )( rand, 100 )()
+          ( LI )( rand, 100 )()
+        ()
+
+        ( P )
+          ( "This page took three seconds to load, to show " )
+          ( "that the numbers were streamed in realtime." )
+        ()
+        
+        ( P )
+          ( "This is much more compelling when you can see it stream, " )
+          ( "so execute the following from the terminal:" )
+        ()
+
+        ( PRE )
+          ( "curl -N http://localhost:4011/5" )
+        ()
+
+        ( returnLink )
+      ()
+      
+      // any page can be coded inline, or factored out
+      ( mainPage )
+    ()
+  ()
+();
