@@ -10,6 +10,8 @@ once this branch is as stable as the current master, all installation will be do
 
     node server.js
     
+(you can also see it running on [heroku](http://fabv5.heroku.com/).)
+    
 you can get a sense of how things work from the comments in the source, but the following gives an overview. you can also check out [my presentation](http://vimeo.com/14093679) at the latest node.js meetup in palo alto, where i talk about (fab) and its:
 
 ## top ten priorities
