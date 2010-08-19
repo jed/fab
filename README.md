@@ -96,13 +96,11 @@ and we can add it to our app above like this:
       ( listen, 0xFAB )
       
       ( div )
-        ( "Hello, " )
+        ( "Hello" )
       
-        ( path, /^\/(\w+)$/ )
-          ( path.capture.at, 0 )()
-          ( "world" )()
-      
-        ( "!" )
+        ( route, /^\/(\w+)$/ )
+          ( ", " )( route.capture, 0 )( "!" )
+        ()
       ()
     ()
 
