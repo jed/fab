@@ -1,3 +1,7 @@
+process.on('uncaughtException', function (err) {
+  console.log('Caught exception: ' + err);
+});
+
 fab = require( "./" );
 
 // define an app that returns a random number
