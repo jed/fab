@@ -151,9 +151,13 @@ with ( html )
 
         ( returnLink )
       ()
+
+      // make sure the method is GET      
+      ( method.GET )
+        ( mainPage ) // any page can be coded inline, or factored out  
+      ()
       
-      // any page can be coded inline, or factored out
-      ( mainPage )
+      ( "Method not supported.", { status: 405 } )
     ()
   ()
 ();

@@ -134,6 +134,29 @@ fab.route = function() {
   }
 }();
 
+fab.method = function() {
+  var names = "GET PUT POST DELETE HEAD".split( " " );
+
+  function method( write, name ) {
+    return fab.stream( function( yes ) {
+      return fab.stream( function( no ) {
+        return write( function( write, head ) {
+          return ( head.method == name ? yes : no )( write, head );
+        })();
+      });
+    });
+  }
+  
+  for ( var i = 5; i--; ) ( function( name ) {
+    method[ name ] = function( write ) {
+      return method( write, name );
+    }
+  })( names[ i ] );
+  
+  return method;
+}();
+
+
 fab.render = function( write ) {
   var args = [].slice.call( arguments );
 
