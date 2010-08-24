@@ -39,6 +39,11 @@ fab.stream = function stream( write, queue ) {
   }
 }
 
+fab.import = function( write, obj ) {
+  for ( var n in obj ) fab[ n ] = obj[ n ];
+  return write;
+}
+
 fab.listen = function( write, port ) {
   var url = require( "url" );
 
@@ -55,11 +60,19 @@ fab.listen = function( write, port ) {
       var status = 200
         , headers = {};
         
-      stream( fab.render( read, {
-        method: req.method,
-        headers: req.headers,
-        url: url.parse( "//" + req.headers.host + req.url )
-      }))();
+      stream( fab.render(
+        read,
+
+        {
+          method: req.method,
+          headers: req.headers,
+          url: url.parse( "//" + req.headers.host + req.url )
+        },
+
+        function body( write ) {
+          req.on( "data", write ).on( "end", write );
+        }
+      ))();
         
       function read( body, head ) {
         

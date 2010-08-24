@@ -152,7 +152,6 @@ with ( html )
         ( returnLink )
       ()
 
-      // make sure the method is GET      
       ( method.GET )
         ( mainPage ) // any page can be coded inline, or factored out  
       ()
