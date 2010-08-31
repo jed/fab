@@ -95,7 +95,7 @@ fab.listen = function( write, port ) {
               headers = undefined;
             }
             
-            res.write( body.toString() );
+            res.write( body );
           }
         }
   
