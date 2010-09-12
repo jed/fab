@@ -66,7 +66,7 @@ fab.listen = function( write, port ) {
         {
           method: req.method,
           headers: req.headers,
-          url: url.parse( "//" + req.headers.host + req.url )
+          url: url.parse( "http://" + req.headers.host + req.url )
         },
 
         function body( write ) {
