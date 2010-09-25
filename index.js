@@ -44,14 +44,17 @@ fab.import = function( write, obj ) {
   return write;
 }
 
-fab.listen = function( write, port ) {
+fab.listen = function( write, port, serverCallback ) {
   var url = require( "url" );
 
   return fab.stream( function read( stream ) {
-    require( "http" )
-      .createServer( listener( stream ) )      
-      .listen( port );
-    
+    var server = require( "http" )
+      .createServer( listener( stream ) );
+    server.listen( port );
+    if ( serverCallback ) {
+      serverCallback( server );
+    }
+
     return stream( write );
   });
   
