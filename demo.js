@@ -1,4 +1,11 @@
 // i'm not a huge fan of the commonJS require spec, but it'll do for now.
+// if your app uses module.exports, all you need to launch it is
+//
+// $ fab app-name.js
+//
+// otherwise, you can always ad-hoc it with
+//
+// require( "fab" )( your app function )
 module.exports = function( exports, imports ) {
 
   // imports is an async function that piggybacks on require.
