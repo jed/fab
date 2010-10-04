@@ -2,9 +2,12 @@ module.exports = function( exports, imports ) {
   var url = require( "url" );
 
   return imports( function( stream, render ) {
-    return exports( function( write ) {
+    return exports( function( write, fn ) {
       return stream( function( upstream ) {
-        return write( function( req, res ) {
+        if ( fn ) fn( listener );
+        return write( listener );
+
+        function listener( req, res ) {
           var status = 200
             , headers = {};
             
@@ -48,7 +51,7 @@ module.exports = function( exports, imports ) {
       
             return read;
           }
-        });
+        }
       })
     })
   }, "stream", "render" )
