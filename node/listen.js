@@ -4,7 +4,9 @@ module.exports = function( exports, imports ) {
   return imports( function( stream, listener ) {
     return exports( function( write, server ) {
       if ( !( server instanceof http.Server ) ) {
-        server = http.createServer().listen( server );
+        var where = server;
+        server = http.createServer();
+        server.listen( where );
       }
       
       return stream( function( upstream ) {
