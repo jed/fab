@@ -19,13 +19,13 @@ Here's an example of a "hello world" app:
               ( EM )
                 ( route, /^\/(\w+)$/ )
                   ( route.capture, 0 )
-                ()
+                ( /* else */ )
                   ( "world!" )
-              ()
+              () //EM
               
               ( "!" )
-            ()
-          ()
+            () //BODY
+          () //HTML
         ();
       })
     }
