@@ -18,12 +18,16 @@ function imports( exports ) {
         
   ( function loop() {
     var name = names.shift();
-    
-    if ( !name ) exports.apply( undefined, libs );
 
-    else require( name.replace( /\W/g, "/" ) )( function( lib ) {
-      libs.push( lib );
-      loop();
-    }, imports );
+    if ( !name ) exports.apply( undefined, libs );
+    
+    else {
+      console.log( name )
+    
+      require( name.replace( /\W/g, "/" ) )( function( lib ) {
+        libs.push( lib );
+        loop();
+      }, imports );
+    }
   })()
 }

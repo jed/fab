@@ -60,7 +60,7 @@ module.exports = function( exports, imports ) {
       // we didn't match the /static url, so we keep going.
       
       // now let's return the front page
-      ( route, /^\/$/ )
+      ( route, /^\/hello/ )
         // since we've with'ed the html app above, each uppercase element
         // name <foo> here is a reference to html.<foo>. there's an app
         // for each HTML5 element, and each of these apps is just middleware
