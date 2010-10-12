@@ -22,8 +22,6 @@ function imports( exports ) {
     if ( !name ) exports.apply( undefined, libs );
     
     else {
-      console.log( name )
-    
       require( name.replace( /\W/g, "/" ) )( function( lib ) {
         libs.push( lib );
         loop();
