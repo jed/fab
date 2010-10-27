@@ -1,0 +1,123 @@
+<html>
+  <head>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.3/jquery.min.js"></script>
+    <script> 
+      // a feed that returns the contents of the #bg input    
+      function color( cb ) {
+        $( "#bg" ).live( "keydown keyup blur", function fn() {
+          return cb && ( cb = cb( this.value ) ) && fn
+        })
+      }
+      
+      // a feed that returns suggestions based on the #term input
+      function suggestions( cb ) {
+        $( "#term" ).live( "keyup", function fn() {
+          $.getJSON(
+            "http://suggestqueries.google.com/complete/search?qu=" + this.value + "&json=t&callback=?",
+            function( data ){ cb && ( cb = cb( data[ 1 ].join( ", " ) ) ) && fn }
+          )
+        })
+      }
+      
+      // two feeds, offset.x and offset.y, that represent the location of the mouse
+      var pointer = {
+        offset: ( function( $win, ret ) {
+          for ( var dim in ret ) ( function( prop ) {
+            ret[ dim ] = function( cb ) {
+              $win.bind( "mousemove", function fn( e ) {
+                cb ? cb = cb( e[ prop ] ) : $win.unbind( "mousemove", fn )
+              })
+            }
+          })( ret[ dim ] )
+  
+          return ret
+        })( $( window ), { x: "pageX", y: "pageY" } )
+      }
+    </script>
+  </head>
+  <body>
+    <!-- fab auto-executes 'with(fab)' any scripts with type 'text/fab' -->
+    <script type="text/fab">
+      // no pretty (fab) DSL yet, but the functionality is here
+      
+      // fab.dom takes any input and returns a DOM node
+      ( dom (
+      
+        // no need to learn an API, since each property the same as the w3c      
+        { nodeName: "div"
+        , style:
+          { position: "absolute"
+          , right: "0"
+          , left: "0"
+          , top: "0"
+          , bottom: "0"
+          , fontSize: "2em"       
+          , padding: "20px"
+          , backgroundColor: color
+          , textAlign: "center"
+          }
+        , childNodes:
+        
+          [ "enter a background color (such as '#fab'): "
+          
+          , { nodeName: "br" }
+          , { nodeName: "br" }
+    
+          , { nodeName: "input"
+            , type: "text"
+            , id: "bg"
+            , style: { fontSize: "2em" }
+            }
+
+          , { nodeName: "br" }
+          , { nodeName: "br" }
+    
+          , "enter a search term to complete: "
+          
+          , { nodeName: "br" }
+          , { nodeName: "br" }
+    
+          , { nodeName: "input"
+            , type: "text"
+            , id: "term"
+            , style: { fontSize: "2em" }
+            }
+
+          , { nodeName: "br" }
+          , { nodeName: "br" }
+          
+          , "suggestions: "
+          , { nodeName: "br" }
+          , suggestions
+
+          , { nodeName: "br" }    
+          , { nodeName: "br" }    
+
+          , { nodeName: "div"
+            , childNodes: [ pointer.offset.x ]
+            , style:
+              { position: "absolute"
+              , bottom: "20px"
+              , left: pointer.offset.x
+              , paddingLeft: "10px"
+              , borderLeft: "1px solid black"
+              }
+            }
+    
+          , { nodeName: "div"
+            , childNodes: [ pointer.offset.y ]
+            , style:
+              { position: "absolute"
+              , top: pointer.offset.y
+              , right: "20px"
+              , paddingTop: "10px"
+              , borderTop: "1px solid black"
+              }
+            }
+          ]
+        }
+      ))
+    </script>
+  </body>
+</html>
+<script src="fab.js"></script>
