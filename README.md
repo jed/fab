@@ -9,7 +9,7 @@ the server is a great place to enjoy the kind of functional programming that (fa
 
 the browser, on the other hand, does not lend itself as well to a functional approach. mutable state is centralized in a giant memory structure called the DOM, with various functions competing to traverse and manipulate it. most frameworks are based on finding things in the DOM and then binding to events that happen to these things.
 
-(fab) takes a different tack. apps are written declaratively in a language just like HTML but still pure javascript, with *every single element and attribute* bound to a stream that constantly updates its latest value. here is what a simple hello world app looks like:
+(fab) takes a different tack. apps are written declaratively in a language just like HTML but still pure javascript, with *every single element and attribute* bound to a stream that constantly updates its latest value. here is what a simple hello world app would look like:
 
     ( HTML )
       ( HEAD )
