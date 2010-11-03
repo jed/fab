@@ -1,9 +1,7 @@
 <html>
-  <head>
+  <body>
     <script src="jquery-1.4.3.js"></script>
     <script src="feeds.js"></script>
-  </head>
-  <body>
     <script src="fab.js">
       ( HTML )
         ( HEAD )
@@ -11,16 +9,18 @@
 
           ( STYLE )
             // will eventually be native js: ie
-            // ({ "body": { textAlign: "center" }
-            //  , "body, input": { fontSize: "2em" }
-            //  , ... })
+            // ({
+            //    "body":         { textAlign: "center" },
+            //    "body, input":  { fontSize: "2em" },
+            //    ... et cetera ...
+            // })
 
-            ( "body { text-align:center; }" )
+            ( "body        { text-align:center; }" )
             ( "body, input { font-size:2em; }" )
-            ( ".section { padding-top:30px; }" )
-            ( ".x, .y { position:absolute; }" )
-            ( ".x { bottom:20px; padding-left:10px; border-left:1px solid black }" )
-            ( ".y { right:20px;  padding-top:10px;  border-top:1px solid black }" )
+            ( ".section    { padding-top:30px; }" )
+            ( ".x, .y      { position:absolute; }" )
+            ( ".x { bottom: 20px; padding-left: 10px; border-left: 1px solid black }" )
+            ( ".y { right:  20px; padding-top:  10px; border-top:  1px solid black }" )
           ()
         ()
 
@@ -48,7 +48,7 @@
           ()
 
           ( DIV, { className: "y", style: { top: pointer.offset.y } } )
-            ( pointer.offset.x )
+            ( pointer.offset.y )
           ()
         ()
       ()
