@@ -1,7 +1,7 @@
 (fab) for the browser: an early alpha
 =====================================
 
-well, it's been a long time coming, but i've finally started making progress on the browser version of (fab). *keep in mind that it's just a prototype right now*, without (fab)'s hallmark syntactic sugar. but the core functionality is there. launch `demo.html` in your browser to see what's possible now, or try it [here](http://s3.amazonaws.com/fabdemo/demo.html).
+well, it's been a long time coming, but i've finally started making progress on the browser version of (fab). *keep in mind that it's just a prototype right now*, but the core functionality is there. launch `demo.html` in your browser to see what's possible now, or try it [here](http://s3.amazonaws.com/fabdemo/demo.html).
 
 ## the (fab) approach to browser apps
 
@@ -9,7 +9,7 @@ the server is a great place to enjoy the kind of functional programming that (fa
 
 the browser, on the other hand, does not lend itself as well to a functional approach. mutable state is centralized in a giant memory structure called the DOM, with various functions competing to traverse and manipulate it. most frameworks are based on finding things in the DOM and then binding to events that happen to these things.
 
-(fab) takes a different tack. apps are written declaratively in a language just like HTML but still pure javascript, with *every single element and attribute* bound to a stream that constantly updates its latest value. here is what a simple hello world app will look like once the DSL is done:
+(fab) takes a different tack. apps are written declaratively in a language just like HTML but still pure javascript, with *every single element and attribute* bound to a stream that constantly updates its latest value. here is what a simple hello world app looks like:
 
     ( HTML )
       ( HEAD )
@@ -49,7 +49,7 @@ this means that the server (fab) API is going to change again, alas. if you're l
 
 here's what i'll be working on next:
 
-* finish the html DSL and release a proper alpha
+* release a proper alpha
 * port all javascript operators and `Math` methods to allow stream composition (example: a stream called `distance` that takes two coordinate streams and streams their scalar distance, or a stream called `cookie` that polls document.cookie and streams any changes)
 * start unifying the server and browser (fab) APIs
 
