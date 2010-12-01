@@ -1,5 +1,5 @@
 { "name" : "fab"
-, "description" : "a web framework built for steaming"
+, "description" : "a web framework built for streaming"
 , "version" : "0.5.2"
 , "main" : "./index"
 , "bin" : { "fab" : "./cli.js" }
@@ -8,7 +8,6 @@
   { "type" : "git"
   , "url" : "http://github.com/jed/fab.git"
   }
-, "main" : "./index"
 , "engines": [ "node" ]
 , "licenses" :
   [ { "type" : "MIT"
