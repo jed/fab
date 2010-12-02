@@ -1,6 +1,6 @@
 { "name" : "fab"
 , "description" : "a web framework built for streaming"
-, "version" : "0.5.2"
+, "version" : "0.5.3"
 , "main" : "./index"
 , "bin" : { "fab" : "./cli.js" }
 , "author" : "Jed Schmidt <tr@nslator.jp>"
