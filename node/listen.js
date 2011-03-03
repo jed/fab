@@ -1,7 +1,7 @@
 module.exports = function( exports, imports ) {
   var http = require( "http" );
 
-  return imports( function( stream, listener ) {
+  return imports( function( queue, listener ) {
     return exports( function( write, server ) {
       if ( !( server instanceof http.Server ) ) {
         var where = server;
@@ -9,7 +9,7 @@ module.exports = function( exports, imports ) {
         server.listen( where );
       }
       
-      return stream( function( upstream ) {
+      return queue( function( upstream ) {
         upstream( listener( function( listener ) {
           server.on( "request", listener );
         }))
@@ -17,5 +17,5 @@ module.exports = function( exports, imports ) {
         return upstream( write );
       });
     });
-  }, "stream", "node/listener" );
+  }, "queue", "node/listener" );
 }

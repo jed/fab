@@ -1,9 +1,9 @@
 module.exports = function( exports, imports ) {
-  return imports( function( stream, render ) {
+  return imports( function( queue, render ) {
     return exports( function( write ) {
-      return stream( function( upstream ) {
+      return queue( function( upstream ) {
         return write( function( write, head, body ) {
-          var buffered = stream()
+          var buffered = queue()
             , length = 0;
     
           return upstream( render( function read( body, head ) {
@@ -20,5 +20,5 @@ module.exports = function( exports, imports ) {
         })();
       });
     });
-  }, "stream", "render" );
+  }, "queue", "render" );
 }

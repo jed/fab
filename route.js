@@ -1,7 +1,7 @@
 module.exports = function( exports, imports ) {
   var slice = Array.prototype.slice;
 
-  return imports( function( stream ) {
+  return imports( function( queue ) {
     route.capture = function( write, i ) {
       return write( function( write, head ) {
         var capture = head.url.capture || [];
@@ -12,8 +12,8 @@ module.exports = function( exports, imports ) {
     return exports( route );
     
     function route( write, pattern ) {
-      return stream( function( yes ) {
-        return stream( function( no ) {
+      return queue( function( yes ) {
+        return queue( function( no ) {
           return write( function( write, head, body ) {
             var app = no
               , url = head.url;
@@ -37,5 +37,5 @@ module.exports = function( exports, imports ) {
         });
       });
     }
-  }, "stream" );
+  }, "queue" );
 };

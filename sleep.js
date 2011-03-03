@@ -1,8 +1,8 @@
 module.exports = function( exports, imports ) {
-  return imports( function( stream ) {
+  return imports( function( queue ) {
     return exports( function( write, duration ) {
       return write( function( write ) {
-        return stream( function( rest ) {
+        return queue( function( rest ) {
           setTimeout(
             function(){ return rest( write ) },
             duration || 0 
@@ -10,5 +10,5 @@ module.exports = function( exports, imports ) {
         });
       });
     });
-  }, "stream" );
+  }, "queue" );
 }

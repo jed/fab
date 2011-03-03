@@ -21,7 +21,7 @@ module.exports = function( exports, imports ) {
     , route
     , ignore
     , write
-    , stream
+    , queue
     , html
     , head
     , node$fs

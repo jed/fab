@@ -1,10 +1,10 @@
 module.exports = function( exports, imports ) {
-  return imports( function( stream ) {
+  return imports( function( queue ) {
     var names = "GET PUT POST DELETE HEAD".split( " " );
   
     function method( write, name ) {
-      return stream( function( yes ) {
-        return stream( function( no ) {
+      return queue( function( yes ) {
+        return queue( function( no ) {
           return write( function( write, head, body ) {
             return ( head.method == name ? yes : no )( write, head, body );
           })();

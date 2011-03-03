@@ -1,9 +1,9 @@
 module.exports = function( exports, imports ) {
   var url = require( "url" );
 
-  return imports( function( stream, render ) {
+  return imports( function( queue, render ) {
     return exports( function( write, fn ) {
-      return stream( function( upstream ) {
+      return queue( function( upstream ) {
         if ( fn ) fn( listener );
         return write( listener );
 
@@ -54,5 +54,5 @@ module.exports = function( exports, imports ) {
         }
       })
     })
-  }, "stream", "render" )
+  }, "queue", "render" )
 }
