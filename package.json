@@ -1,17 +1,27 @@
-{ "name" : "fab"
-, "description" : "a web framework built for streaming"
-, "version" : "0.5.3"
-, "main" : "./index"
-, "bin" : { "fab" : "./cli.js" }
-, "author" : "Jed Schmidt <tr@nslator.jp>"
-, "repository" :
-  { "type" : "git"
-  , "url" : "http://github.com/jed/fab.git"
-  }
-, "engines": [ "node" ]
-, "licenses" :
-  [ { "type" : "MIT"
-    , "url" : "http://github.com/jed/fab/blob/master/LICENSE.txt"
+{
+  "name": "fab",
+  "description": "a web framework built for streaming",
+  "version": "0.5.2",
+  "main": "./index",
+  "bin": {
+    "fab": "./cli.js"
+  },
+  "author": "Jed Schmidt <tr@nslator.jp>",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/jed/fab.git"
+  },
+  "engines": [
+    "node"
+  ],
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "http://github.com/jed/fab/blob/master/LICENSE.txt"
     }
+  ],
+  "directories": {},
+  "files": [
+    ""
   ]
 }
