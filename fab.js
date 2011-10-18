@@ -23,8 +23,8 @@ fab = function() {
 
       for ( var i = 0; i < list.length; ) arg.appendChild( fab( list[ i++ ] ) )  
     }
-  
-    if ( arg.nodeType && !hasOwnProperty( arg, "nodeType" ) ) return arg
+
+    if ( arg.nodeType ) return arg
   
     arg = ( arg += "" ).indexOf( "<!--" )
       ? doc.createTextNode( arg )
