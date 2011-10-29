@@ -5,7 +5,7 @@ module.exports = function( exports ) {
         url: "href protocol host auth hostname port pathname search query hash capture",
         headers: "accept acceptCharset acceptEncoding acceptLanguage acceptRanges authorization cacheControl connection cookie contentLength contentType date expect from host ifMatch ifModifiedSince ifNoneMatch ifRange ifUnmodifiedSince maxForwards pragma proxyAuthorization range referer te upgrade userAgent via warning"
       };
-  
+
   for ( prop in props ) {
     var subprops = props[ prop ].split( " " );
 
@@ -14,12 +14,12 @@ module.exports = function( exports ) {
       head[ prop ][ subprop ] = getter( "head." + prop + "." + subprop );
     }
   }
-  
+
   return exports( head );
-  
+
   function writer( val ) {
     return new Function( "write", "head", "return write(" + val + ")" );
   }
 
-  function getter( name ){ return writer( writer( name ) ) }  
+  function getter( name ){ return writer( writer( name ) ) }
 };

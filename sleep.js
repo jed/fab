@@ -5,7 +5,7 @@ module.exports = function( exports, imports ) {
         return queue( function( rest ) {
           setTimeout(
             function(){ return rest( write ) },
-            duration || 0 
+            duration || 0
           );
         });
       });
