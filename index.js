@@ -15,15 +15,15 @@ function imports( exports ) {
       : exports.toString()
         .split( /[^\w$]+/, exports.length + !!exports.name + 1 )
         .slice( !!exports.name + 1 );
-        
+
   ( function loop() {
     var name = names.shift();
 
     if ( !name ) exports.apply( undefined, libs );
-    
+
     else {
       console.log( name.replace( /\W/g, "/" ), name.replace( /\W/g, "/" ) )
-    
+
       require( name.replace( /\W/g, "/" ) )( function( lib ) {
         libs.push( lib );
         loop();

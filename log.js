@@ -4,7 +4,7 @@ module.exports = function( exports ) {
       console.log( msg );
       return write;
     }
-  
+
     return function read( body ) {
       console.log( body );
       write = write.apply( undefined, arguments );

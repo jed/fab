@@ -8,12 +8,12 @@ module.exports = function( exports, imports ) {
         server = http.createServer();
         server.listen( where );
       }
-      
+
       return queue( function( upstream ) {
         upstream( listener( function( listener ) {
           server.on( "request", listener );
         }))
-    
+
         return upstream( write );
       });
     });

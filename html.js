@@ -16,56 +16,56 @@ module.exports = function( exports ) {
  SOURCE WBR".split( " " )
 
     ];
-  
+
   for ( var isVoid = 0, names; names = tags[ isVoid ]; isVoid++ ) {
     for ( var i = 0, name; name = names[ i++ ]; ) {
       elem[ name ] = elem( name.toLowerCase(), !!isVoid );
     }
   }
-  
+
   elem.DOCTYPE = function( write, dec ) {
     return write( "<!DOCTYPE " )( dec )( ">\n" );
   }
 
   elem.COMMENT = function( write ) {
     write = write( "<!-- " );
-    
+
     return function read( obj ) {
       if ( !arguments.length ) return write( " -->" );
       write = write( obj );
-      return read;    
+      return read;
     }
   }
-  
+
   return exports( elem );
-  
+
   function elem( name, isVoid ) {
     return function( write, obj ) {
       write = write( "<" + name );
       write = attrs( write )( obj )( ">" );
-      
+
       if ( isVoid ) return write;
-    
+
       return function read( arg ) {
         if ( !arguments.length ) return write( "</" + name + ">" );
-        
+
         write = write.apply( undefined, arguments );
         return read;
       };
     }
   }
-  
+
   function attrs( write ) {
     return function read( obj ) {
       for ( var name in obj ) {
         write = write( " " )( name )( "=" );
         write = attr( write )( obj[ name ] );
       }
-    
+
       return write;
     }
   }
-  
+
   function attr( write ) {
     return function read( value ) {
       return write( "\"" )( value )( "\"" );

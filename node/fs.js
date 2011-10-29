@@ -13,7 +13,7 @@ module.exports = function( exports, imports ) {
                 .on( "error", function(){ rest(
                   write( "File not found: " + path, { status: 404 } ), head, body
                 )});
-                
+
               return ignore;
             }, head, body ), head, body), head, body );
           });

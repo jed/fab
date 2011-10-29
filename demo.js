@@ -35,30 +35,30 @@ module.exports = function( exports, imports ) {
     // this is blank because we don't need to give run a downstream function,
     // since we're not piping anything to stdout.
     ()
-    
+
       // this fires up a listener on port 4011
       ( node$listen, 0xFAB )
-      
+
       // let's route for static files. route is an app that takes two streams,
       // one for matches and one for non-matches.
       ( route, /^\/static/ )
         // we matched!
-      
+
         // the fs module takes one stream: the path name. it's just middleware
         // that converts an upstream path name to the contents of the file.
         ( node$fs )
           // first, get the current directory
           ( __dirname )
-          
+
           // then sleep for 500, just because we can
           ( sleep, 500 )
-          
+
           // then append the pathname
           ( head.url.pathname )
         ()
       ()
       // we didn't match the /static url, so we keep going.
-      
+
       // now let's return the front page
       ( route, /^\/hello/ )
         // since we've with'ed the html app above, each uppercase element
@@ -69,7 +69,7 @@ module.exports = function( exports, imports ) {
         ( HTML )
           ( BODY, { id: "show" } )
             ( "Hello, " )
-            
+
             ( EM )
               // this pattern looks for a url that ends with an alphanumeric string
               ( route, /^\/(\w+)$/ )
@@ -77,15 +77,15 @@ module.exports = function( exports, imports ) {
                 // the captured path segment at the given index.
                 ( route.capture, 0 )
               ()
-                // we didn't match, so let's output a generic hello. 
+                // we didn't match, so let's output a generic hello.
                 ( "world" )
             ()
-            
+
             ( "!" )
           ()
         ()
       ()
-      
+
       // this is a catchall 404 for any paths that haven't matched.
       ( "Not found.", { status: 404 } )
     ();
