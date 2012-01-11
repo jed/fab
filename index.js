@@ -23,8 +23,7 @@ function imports( exports ) {
     
     else {
       console.log( name.replace( /\W/g, "/" ), name.replace( /\W/g, "/" ) )
-    
-      require( name.replace( /\W/g, "/" ) )( function( lib ) {
+      require( './' + name.replace( /\W/g, "/" ) )( function( lib ) {
         libs.push( lib );
         loop();
       }, imports );
